@@ -4,7 +4,7 @@ import math
 
 print("give me a bottle of rum!")
 
-class CTF():
+class CNF():
   def __init__(self):
     self.sudtorules = ""
 	
@@ -24,7 +24,7 @@ class CTF():
     sudtorules = []
     for i in range(length):
       for j in range(length):
-        n = line[i*4+j]
+        n = line[i*length+j]
         if n!="." :
           string = ("{}{}{}".format(i+1,j+1,n))
           sudtorules.append(string)
@@ -36,6 +36,6 @@ if len(sys.argv) != 2 :
   print ("Error in number of arguments. Command form : python SudToCNF.py pathToFile")
   exit(1)
 # Main code
-ctf = CTF()
-ctf.load(sys.argv[1])
-print(ctf.sudtorules)
+cnf = CNF()
+cnf.load(sys.argv[1])
+print(cnf.sudtorules)
