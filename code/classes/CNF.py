@@ -2,44 +2,6 @@
 
 import math
 import linecache
-
-class Variable():
-    """Represents a variable"""
-
-    def __init__(self, name):
-        # Name of the variable (e.g. 112)
-        self.variable_name = name
-
-        # Current boolean status of the variable, starts as None
-        self.boolean = None
-
-class Literal():
-    """Represents a single literal"""
-
-    def __init__(self, variable, negated):
-        # The variable "name" this literal represents
-        self.variable = variable
-
-        # Bool which represents if the literal is negated or not
-        self.negation = negated
-    
-    def __str__(self):
-        return ("-" * self.negation) + (self.variable.variable_name)
-
-class Clause():
-    """"Represents a single clause, which is a disjunction of literals"""
-
-    def __init__(self, literals):
-
-        # List of literals that are contained in the Clause.
-        self.literals = literals
-    
-    def __str__(self):
-        string = ""
-        for literal in self.literals:
-            string += "{} v ".format(literal)
-        return string[:-3]
-        
     
 class CNF_Formula():
     """Represents a CNF_Formula, which is a conjuction of clauses"""
@@ -51,6 +13,24 @@ class CNF_Formula():
         # List of clauses which form the CNF
         self.clauses = []
 
+        # Remember removed clauses so you can reverse it.
+        self.removed_clauses = []
+
+    def remove_unit_clauses(self):
+        """Remove unit clauses and add it to removed clauses"""
+        pass
+
+    def remove_pure_literals(self):
+        """Remove all clauses with pure literals"""
+        pass
+
+    def contains_empty_clause(self):
+        """Returns if the CNF contains an empty clause and is thus unsatisfiable"""
+        pass
+
+    def contains_tautology(self):
+        """Returns if the CNF contains a tautology and is thus unsatisfiable"""
+        pass
 
     def load_dimacs_string(self, string):
         """Encode a dimacs string and add it to the clause list of this CNF_formula"""
@@ -97,7 +77,7 @@ class CNF_Formula():
         # Add string to clauses
         self.load_dimacs_string(string)
 
-    def load_sudoku(self, mfile):
+    def load_sudoku_file(self, mfile):
         # Opens the file, reads the number of sudokus (lines) in it and asks which sudoku you want to solve
         with open(mfile, "r") as sud_file:
             nbLines = len(sud_file.readlines())
@@ -127,7 +107,51 @@ class CNF_Formula():
         for clause in self.clauses:
             print(clause)  
 
-     
+    # Print the currently loaded variables and clauses
+    def print_status(self):
+        print(f"Variables: {len(self.variable_dict)}, Clauses: {len(self.clauses)}")
+
+
+class Variable():
+    """Represents a variable"""
+
+    def __init__(self, name):
+        # Name of the variable (e.g. 112)
+        self.variable_name = name
+
+        # Current boolean status of the variable, starts as None
+        self.boolean = None
+
+
+class Literal():
+    """Represents a single literal"""
+
+    def __init__(self, variable, negated):
+        # The variable "name" this literal represents
+        self.variable = variable
+
+        # Bool which represents if the literal is negated or not
+        self.negation = negated
+    
+    def __str__(self):
+        return ("-" * self.negation) + (self.variable.variable_name)
+
+
+class Clause():
+    """"Represents a single clause, which is a disjunction of literals"""
+
+    def __init__(self, literals):
+
+        # List of literals that are contained in the Clause.
+        self.literals = literals
+    
+    def __str__(self):
+        string = ""
+        for literal in self.literals:
+            string += "{} v ".format(literal)
+        return string[:-3]
+        
+
 if __name__ == "__main__":
     
     CNF = CNF_Formula()
