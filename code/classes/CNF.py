@@ -15,22 +15,111 @@ class CNF_Formula():
 
         # Remember removed clauses so you can reverse it.
         self.removed_clauses = []
+        self.changed_variables = []
 
     def remove_unit_clauses(self):
         """Remove unit clauses and add it to removed clauses"""
-        pass
+        clause_counter = 0
+        while clause_counter < len(self.clauses):
+            if len(self.clauses[clause_counter].literals) == 1:
+                if self.clauses[clause_counter].literals[0].variable.boolean == None:
+                    self.clauses[clause_counter].literals[0].variable.boolean = not self.clauses[clause_counter].literals[0].negation
+                    self.changed_variables.append(variable)
+                    print("removed", self.clauses[clause_counter])
+                    self.remove_clause(clause_counter)
+                    continue
+                else:
+                    print("Error: boolean should always be None in this case")
+                    exit()
+                
+            clause_counter += 1  
+
+    def remove_clause(self, clause_index):
+        """This function is used to remove clauses and handle it correctly"""
+        
+        # Go over all literals in clause and remove them from the variable counter
+        for literal in self.clauses[clause_index]:
+            if literal.negation:
+                literal.variable.occurs_negated -= 1
+            else:
+                literal.variable.occurs_positive -= 1
+
+        self.removed_clauses.append(self.clauses[clause_index])
+        
+        del self.clauses[clause_index]
 
     def remove_pure_literals(self):
         """Remove all clauses with pure literals"""
+        
+        # Check for all variables if they only exist in negated or positive manner,
+        for variable in self.variable_dict:
+            
+            self.print_clauses()
+            print()
+            # Only occurs negated 
+            if (self.variable_dict[variable].occurs_negated != 0 and self.variable_dict[variable].occurs_positive == 0):
+                self.variable_dict[variable].boolean = False
+            
+            # Only occurs positve
+            elif (self.variable_dict[variable].occurs_negated == 0 and self.variable_dict[variable].occurs_positive != 0):
+                self.variable_dict[variable].boolean = True
+
+            # Else skip this variable
+            else:
+                continue
+            
+            # Add to list of vars we changed
+            self.changed_variables.append(variable)
+
+            # Remove all clauses that have that variable
+            clause_counter = 0
+            while clause_counter < len(self.clauses):
+                
+
+                # Check all literals in clauses
+                for literal in self.clauses[clause_counter]:
+                    # if variable in clause
+                    if literal.variable.variable_name == variable:
+                        print(literal.variable.variable_name, variable)
+                        print("remove: ", self.clauses[clause_counter])
+                        self.remove_clause(clause_counter)
+                        break
+                # if no break
+                else: 
+                    clause_counter += 1  
+
+        
+    
+    def remove_tautologies(self):
+        """Returns if the CNF contains a tautology"""
         pass
+    
+    def undo_changes(self):
+        """undo the changes we made with the simplify rules"""
+        
+        # Reset booleans to None
+        for variable in self.changed_variables:
+            self.variable_dict[variable].boolean = None
+
+        # Re add variable counts:
+        for clause in self.removed_clauses:
+            for literal in clause:
+                if literal.negation:
+                    literal.variable.occurs_negated += 1
+                else:
+                    literal.variable.occurs_positive += 1
+        
+        # Re add clauses
+        self.clauses = self.clauses + self.removed_clauses
 
     def contains_empty_clause(self):
         """Returns if the CNF contains an empty clause and is thus unsatisfiable"""
-        pass
-
-    def contains_tautology(self):
-        """Returns if the CNF contains a tautology and is thus unsatisfiable"""
-        pass
+        
+        # Check if there exists a clause that is empty
+        for clause in self.clauses:
+            if not clause:
+                return True
+        return False
 
     def load_dimacs_string(self, string):
         """Encode a dimacs string and add it to the clause list of this CNF_formula"""
@@ -55,13 +144,19 @@ class CNF_Formula():
                 variable = abs(literal)
 
                 # If not yet in dict create new dict entry
-                if variable not in self.variable_dict:
+                if str(variable) not in self.variable_dict:
                     self.variable_dict[str(variable)] = Variable(str(variable))
                 
                 # Check if negated
                 negated = (literal < 0)
 
                 literal_objects.append(Literal(self.variable_dict[str(variable)], negated))
+                
+                # Update variable counter
+                if negated:
+                    self.variable_dict[str(variable)].occurs_negated += 1
+                else:
+                    self.variable_dict[str(variable)].occurs_positive += 1
 
             # Make new clause and append to CNF clause list
             clause = Clause(literal_objects)
@@ -104,12 +199,26 @@ class CNF_Formula():
 
     # Prints all clauses of the CNF
     def print_clauses(self):
+        if not self.clauses:
+            print("No clauses left")
+            print()
+            return
+        
         for clause in self.clauses:
-            print(clause)  
-
+            if not clause:
+                print("empty clause")
+            print(clause)
+        print()
+    
+    def print_variable_counts(self):
+        for variable in self.variable_dict:
+            print("{}: {}, {}".format(self.variable_dict[variable].variable_name, self.variable_dict[variable].occurs_negated, self.variable_dict[variable].occurs_positive))
+        print()
     # Print the currently loaded variables and clauses
     def print_status(self):
         print(f"Variables: {len(self.variable_dict)}, Clauses: {len(self.clauses)}")
+        print()
+
 
 
 class Variable():
@@ -121,6 +230,11 @@ class Variable():
 
         # Current boolean status of the variable, starts as None
         self.boolean = None
+
+        # A Counter which documents the amount of times this variable is used both negated and non negated.
+        # This will be very usefull when we implement a remove unit clauses method.
+        self.occurs_negated = 0
+        self.occurs_positive = 0
 
 
 class Literal():
@@ -150,15 +264,27 @@ class Clause():
         for literal in self.literals:
             string += "{} v ".format(literal)
         return string[:-3]
-        
+
+    # Make for loops work with clauses
+    def __iter__(self):
+        return iter(self.literals)
 
 if __name__ == "__main__":
     
     CNF = CNF_Formula()
+
+    CNF.load_dimacs_file("test.txt")
     
-    CNF.load_dimacs_file("rules.txt")
-    # CNF.print_clauses()
-    print(f"Variables: {len(CNF.variable_dict)}, Clauses: {len(CNF.clauses)}")
+    CNF.print_clauses()
+    CNF.print_variable_counts()
+
+    CNF.remove_unit_clauses
+    CNF.remove_pure_literals()
+
+    CNF.print_clauses()
+    CNF.print_variable_counts()
     
-    CNF.load_sudoku("4x4.txt")
-    print(f"Variables: {len(CNF.variable_dict)}, Clauses: {len(CNF.clauses)}")
+    # Undo the changes made, should return to initial status.
+    CNF.undo_changes()
+    CNF.print_clauses()
+    CNF.print_variable_counts()

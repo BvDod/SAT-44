@@ -10,7 +10,7 @@ class SAT_Solver():
         self.iterations_counter = 0
     
     def load_dimacs_file(self, file):
-        self.CNF.load_dimacs_file(file)
+        self.CNF.load_dimacs_file("test.txt")
     
     def load_sudoku_file(self, file):
         self.CNF.load_sudoku_file(file)
@@ -19,7 +19,7 @@ class SAT_Solver():
         self.CNF.print_status()
 
     def solve_CNF(self):
-        pass
+        DPLL(self)
 
 
 if __name__ == "__main__":
