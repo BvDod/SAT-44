@@ -92,7 +92,25 @@ class CNF_Formula():
     
     def remove_tautologies(self):
         """Returns if the CNF contains a tautology"""
-        pass
+
+        # Go over every var, and delete var if a tautology exists inside the clause
+        clause_counter = 0
+        while clause_counter < len(self.clauses):
+                clause_var_dict = {}
+
+                # Count the amount of times a var exists negated and non negated
+                for literal in self.clauses[clause_counter]:
+                    if literal.variable.variable_name not in clause_var_dict:
+                        clause_var_dict[literal.variable.variable_name] = [0, 0]
+                    clause_var_dict[literal.variable.variable_name][literal.negation] += 1
+                
+                # Check if both negated and non negated vars exists inside same clause
+                for var in clause_var_dict:
+                    if clause_var_dict[var][0] > 0 and clause_var_dict[var][1] > 0:
+                        self.remove_clause(clause_counter)
+                        continue
+                
+                clause_counter += 1 
     
     def undo_changes(self):
         """undo the changes we made with the simplify rules"""
@@ -278,8 +296,7 @@ if __name__ == "__main__":
     CNF.print_clauses()
     CNF.print_variable_counts()
 
-    CNF.remove_unit_clauses
-    CNF.remove_pure_literals()
+    CNF.remove_tautologies()
 
     CNF.print_clauses()
     CNF.print_variable_counts()
