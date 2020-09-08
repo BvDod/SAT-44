@@ -2,6 +2,9 @@
 
 import math
 import linecache
+import time
+
+
     
 class CNF_Formula():
     """Represents a CNF_Formula, which is a conjuction of clauses"""
@@ -17,6 +20,13 @@ class CNF_Formula():
         self.removed_clauses = []
         self.changed_variables = []
 
+    def split_CNF_tree(self, variable, boolean):
+        remove_negated = not boolean
+        
+
+
+
+
     def remove_unit_clauses(self):
         """Remove unit clauses and add it to removed clauses"""
         clause_counter = 0
@@ -24,8 +34,7 @@ class CNF_Formula():
             if len(self.clauses[clause_counter].literals) == 1:
                 if self.clauses[clause_counter].literals[0].variable.boolean == None:
                     self.clauses[clause_counter].literals[0].variable.boolean = not self.clauses[clause_counter].literals[0].negation
-                    self.changed_variables.append(variable)
-                    print("removed", self.clauses[clause_counter])
+                    self.changed_variables.append(self.clauses[clause_counter].literals[0].variable.variable_name)
                     self.remove_clause(clause_counter)
                     continue
                 else:
@@ -54,8 +63,6 @@ class CNF_Formula():
         # Check for all variables if they only exist in negated or positive manner,
         for variable in self.variable_dict:
             
-            self.print_clauses()
-            print()
             # Only occurs negated 
             if (self.variable_dict[variable].occurs_negated != 0 and self.variable_dict[variable].occurs_positive == 0):
                 self.variable_dict[variable].boolean = False
@@ -80,8 +87,6 @@ class CNF_Formula():
                 for literal in self.clauses[clause_counter]:
                     # if variable in clause
                     if literal.variable.variable_name == variable:
-                        print(literal.variable.variable_name, variable)
-                        print("remove: ", self.clauses[clause_counter])
                         self.remove_clause(clause_counter)
                         break
                 # if no break
@@ -129,6 +134,7 @@ class CNF_Formula():
         
         # Re add clauses
         self.clauses = self.clauses + self.removed_clauses
+        self.removed_clauses = []
 
     def contains_empty_clause(self):
         """Returns if the CNF contains an empty clause and is thus unsatisfiable"""
@@ -225,7 +231,8 @@ class CNF_Formula():
         for clause in self.clauses:
             if not clause:
                 print("empty clause")
-            print(clause)
+            else:
+                print(clause)
         print()
     
     def print_variable_counts(self):
@@ -291,17 +298,38 @@ if __name__ == "__main__":
     
     CNF = CNF_Formula()
 
-    CNF.load_dimacs_file("test.txt")
+    CNF.load_dimacs_file("rules.txt")
     
-    CNF.print_clauses()
-    CNF.print_variable_counts()
-
+    # Test to see if same amount of vars and clauses before and after
+    CNF.print_status()
     CNF.remove_tautologies()
-
-    CNF.print_clauses()
-    CNF.print_variable_counts()
-    
-    # Undo the changes made, should return to initial status.
+    CNF.remove_pure_literals()
+    CNF.remove_unit_clauses()
     CNF.undo_changes()
-    CNF.print_clauses()
-    CNF.print_variable_counts()
+    CNF.print_status()
+    
+
+
+    # Tests to see the runtime of each method.
+
+    # Yikes, this one is slow
+    start_time = time.time()
+    for x in range(1000):    
+        CNF.remove_tautologies()
+        CNF.undo_changes()
+    print("Remove tauts + undo runtime: ", (time.time() - start_time)/1000, "seconds")
+    CNF.remove_tautologies()    
+    
+    start_time = time.time()
+    for x in range(10000):    
+        CNF.remove_pure_literals()
+        CNF.undo_changes()
+    print("Remove pures + undo runtime: ", (time.time() - start_time)/10000, "seconds")
+    CNF.remove_pure_literals()
+
+    start_time = time.time()
+    for x in range(10000):    
+        CNF.remove_unit_clauses()
+        CNF.undo_changes()
+    print("Remove units + undo runtime: ", (time.time() - start_time)/10000, "seconds")
+    

@@ -16,7 +16,7 @@ def DPLL(CNF):
 
     for boolean in (True, False):
         set variable to boolean
-
+        split_CNF()
         remove all clauses were one is now true
         # recursive function call
         result = DPLL(CNF)
