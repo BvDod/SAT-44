@@ -1,33 +1,35 @@
-# Pseudocode for DPLL recursive
-def DPLL(CNF):
+import copy
 
-    if CNF.clauses has no clauses left:
-        return sat
-    if CNF.clases contains empty clause:
-        return unsat
+# Pseudocode for DPLL recursive
+def DPLL(sat_solver):
+
+    # No clauses left TODO: is this one needed?
+    if not sat_solver.CNF.clauses:
+        return "SAT"
     
-    # Simplify CNF
-    remove tautologies
-    remove units
-    remove pure literals
-    
-    # Pick variable to "branch"
-    pick a variable
+    # Contains an empty clause
+    if sat_solver.CNF.contains_empty_clause():
+        print("unsat")
+        return "UNSAT"
+
+
+    sat_solver.CNF.remove_tautologies()
+    sat_solver.CNF.remove_unit_clauses()
+    sat_solver.CNF.remove_pure_literals()
+   
+    variable = sat_solver.CNF.pick_variable()
 
     for boolean in (True, False):
-        set variable to boolean
-        split_CNF()
-        remove all clauses were one is now true
+        changes_made = sat_solver.CNF.branch(variable, boolean)
+
         # recursive function call
-        result = DPLL(CNF)
-        if result = SAT:
-            return sat
-        undo removing clauses
+        result = DPLL(sat_solver)
+        if result == "SAT":
+            return "SAT"
+
+        sat_solver.CNF.undo_branch(changes_made)
     
     # Undo changes you made to CNF
-    reset picked variable to None
-    undo remove_taunts
-    undo remove units
-    undo remove pure literals
+    sat_solver.CNF.undo_simplify_changes.
     
-    return unsat
+    return "UNSAT"

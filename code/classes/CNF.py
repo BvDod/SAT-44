@@ -16,126 +16,15 @@ class CNF_Formula():
         # List of clauses which form the CNF
         self.clauses = []
 
-        # Remember removed clauses so you can reverse it.
-        self.removed_clauses = []
-        self.changed_variables = []
-
-    def split_CNF_tree(self, variable, boolean):
-        remove_negated = not boolean
-        
-
-
-
-
     def remove_unit_clauses(self):
         """Remove unit clauses and add it to removed clauses"""
-        clause_counter = 0
-        while clause_counter < len(self.clauses):
-            if len(self.clauses[clause_counter].literals) == 1:
-                if self.clauses[clause_counter].literals[0].variable.boolean == None:
-                    self.clauses[clause_counter].literals[0].variable.boolean = not self.clauses[clause_counter].literals[0].negation
-                    self.changed_variables.append(self.clauses[clause_counter].literals[0].variable.variable_name)
-                    self.remove_clause(clause_counter)
-                    continue
-                else:
-                    print("Error: boolean should always be None in this case")
-                    exit()
-                
-            clause_counter += 1  
-
-    def remove_clause(self, clause_index):
-        """This function is used to remove clauses and handle it correctly"""
-        
-        # Go over all literals in clause and remove them from the variable counter
-        for literal in self.clauses[clause_index]:
-            if literal.negation:
-                literal.variable.occurs_negated -= 1
-            else:
-                literal.variable.occurs_positive -= 1
-
-        self.removed_clauses.append(self.clauses[clause_index])
-        
-        del self.clauses[clause_index]
 
     def remove_pure_literals(self):
         """Remove all clauses with pure literals"""
         
-        # Check for all variables if they only exist in negated or positive manner,
-        for variable in self.variable_dict:
-            
-            # Only occurs negated 
-            if (self.variable_dict[variable].occurs_negated != 0 and self.variable_dict[variable].occurs_positive == 0):
-                self.variable_dict[variable].boolean = False
-            
-            # Only occurs positve
-            elif (self.variable_dict[variable].occurs_negated == 0 and self.variable_dict[variable].occurs_positive != 0):
-                self.variable_dict[variable].boolean = True
-
-            # Else skip this variable
-            else:
-                continue
-            
-            # Add to list of vars we changed
-            self.changed_variables.append(variable)
-
-            # Remove all clauses that have that variable
-            clause_counter = 0
-            while clause_counter < len(self.clauses):
-                
-
-                # Check all literals in clauses
-                for literal in self.clauses[clause_counter]:
-                    # if variable in clause
-                    if literal.variable.variable_name == variable:
-                        self.remove_clause(clause_counter)
-                        break
-                # if no break
-                else: 
-                    clause_counter += 1  
-
-        
-    
     def remove_tautologies(self):
         """Returns if the CNF contains a tautology"""
-
-        # Go over every var, and delete var if a tautology exists inside the clause
-        clause_counter = 0
-        while clause_counter < len(self.clauses):
-                clause_var_dict = {}
-
-                # Count the amount of times a var exists negated and non negated
-                for literal in self.clauses[clause_counter]:
-                    if literal.variable.variable_name not in clause_var_dict:
-                        clause_var_dict[literal.variable.variable_name] = [0, 0]
-                    clause_var_dict[literal.variable.variable_name][literal.negation] += 1
-                
-                # Check if both negated and non negated vars exists inside same clause
-                for var in clause_var_dict:
-                    if clause_var_dict[var][0] > 0 and clause_var_dict[var][1] > 0:
-                        self.remove_clause(clause_counter)
-                        continue
-                
-                clause_counter += 1 
-    
-    def undo_changes(self):
-        """undo the changes we made with the simplify rules"""
         
-        # Reset booleans to None
-        for variable in self.changed_variables:
-            self.variable_dict[variable].boolean = None
-
-        # Re add variable counts:
-        for clause in self.removed_clauses:
-            for literal in clause:
-                if literal.negation:
-                    literal.variable.occurs_negated += 1
-                else:
-                    literal.variable.occurs_positive += 1
-        
-        # Re add clauses
-        self.clauses = self.clauses + self.removed_clauses
-        self.removed_clauses = []
-
     def contains_empty_clause(self):
         """Returns if the CNF contains an empty clause and is thus unsatisfiable"""
         
