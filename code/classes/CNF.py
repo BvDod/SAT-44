@@ -14,7 +14,7 @@ class CNF_Formula():
         self.variable_dict = {}
 
         # List of clauses which form the CNF
-        self.clauses = []
+        self.clauses = {}
 
     def remove_unit_clauses(self):
         """Remove unit clauses and add it to removed clauses"""
@@ -36,7 +36,8 @@ class CNF_Formula():
 
     def load_dimacs_string(self, string):
         """Encode a dimacs string and add it to the clause list of this CNF_formula"""
-           
+        
+        clause_counter = 0
         # Every line is a clause
         for line in string.splitlines():
 
@@ -48,7 +49,7 @@ class CNF_Formula():
             literals = line.split(" ")[:-1]
             
             # Turn all literal strings to literal objects 
-            literal_objects = []
+            literal_set = set()
             for literal in literals:
 
                 literal = int(literal)
@@ -60,20 +61,17 @@ class CNF_Formula():
                 if str(variable) not in self.variable_dict:
                     self.variable_dict[str(variable)] = Variable(str(variable))
                 
-                # Check if negated
-                negated = (literal < 0)
-
-                literal_objects.append(Literal(self.variable_dict[str(variable)], negated))
+                literal_set.add(literal)
                 
                 # Update variable counter
-                if negated:
-                    self.variable_dict[str(variable)].occurs_negated += 1
+                if literal < 0:
+                    self.variable_dict[str(variable)].occurs_negated_in.add(clause_counter)
                 else:
-                    self.variable_dict[str(variable)].occurs_positive += 1
+                    self.variable_dict[str(variable)].occurs_positive_in.add(clause_counter)
 
             # Make new clause and append to CNF clause list
-            clause = Clause(literal_objects)
-            self.clauses.append(clause)
+            self.clauses[str(clause_counter)] = literal_set
+            clause_counter += 1
     
     def load_dimacs_file(self, file):
         """Accepts a dimac file and turns it into a string, then uses another method to encode it and add it to the clauses"""
@@ -112,21 +110,23 @@ class CNF_Formula():
 
     # Prints all clauses of the CNF
     def print_clauses(self):
+        print("Clause_id: clause_set")
         if not self.clauses:
             print("No clauses left")
             print()
             return
         
-        for clause in self.clauses:
-            if not clause:
-                print("empty clause")
+        for key, value in self.clauses.items():
+            if not value:
+                print(f"{key}: empty clause")
             else:
-                print(clause)
+                print(f"{key}: {value}")
         print()
     
     def print_variable_counts(self):
+        print("Variable name, followed by in which clauses it is located negated (-) and positive(+)")
         for variable in self.variable_dict:
-            print("{}: {}, {}".format(self.variable_dict[variable].variable_name, self.variable_dict[variable].occurs_negated, self.variable_dict[variable].occurs_positive))
+            print("{} occurs in clauses: -:{}, +:{}".format(self.variable_dict[variable].variable_name, list(self.variable_dict[variable].occurs_negated_in), list(self.variable_dict[variable].occurs_positive_in)))
         print()
     # Print the currently loaded variables and clauses
     def print_status(self):
@@ -145,80 +145,20 @@ class Variable():
         # Current boolean status of the variable, starts as None
         self.boolean = None
 
-        # A Counter which documents the amount of times this variable is used both negated and non negated.
-        # This will be very usefull when we implement a remove unit clauses method.
-        self.occurs_negated = 0
-        self.occurs_positive = 0
+        # The clause id's in which this variable is present in negated/positive from
+        self.occurs_negated_in = set()
+        self.occurs_positive_in = set()
 
-
-class Literal():
-    """Represents a single literal"""
-
-    def __init__(self, variable, negated):
-        # The variable "name" this literal represents
-        self.variable = variable
-
-        # Bool which represents if the literal is negated or not
-        self.negation = negated
-    
-    def __str__(self):
-        return ("-" * self.negation) + (self.variable.variable_name)
-
-
-class Clause():
-    """"Represents a single clause, which is a disjunction of literals"""
-
-    def __init__(self, literals):
-
-        # List of literals that are contained in the Clause.
-        self.literals = literals
-    
-    def __str__(self):
-        string = ""
-        for literal in self.literals:
-            string += "{} v ".format(literal)
-        return string[:-3]
-
-    # Make for loops work with clauses
-    def __iter__(self):
-        return iter(self.literals)
+        # A list
+        self.occurs_in_clause_ids = []
 
 if __name__ == "__main__":
     
     CNF = CNF_Formula()
 
-    CNF.load_dimacs_file("rules.txt")
-    
-    # Test to see if same amount of vars and clauses before and after
+    CNF.load_dimacs_file("test.txt")
     CNF.print_status()
-    CNF.remove_tautologies()
-    CNF.remove_pure_literals()
-    CNF.remove_unit_clauses()
-    CNF.undo_changes()
-    CNF.print_status()
+    CNF.print_clauses()
+    CNF.print_variable_counts()
     
-
-
-    # Tests to see the runtime of each method.
-
-    # Yikes, this one is slow
-    start_time = time.time()
-    for x in range(1000):    
-        CNF.remove_tautologies()
-        CNF.undo_changes()
-    print("Remove tauts + undo runtime: ", (time.time() - start_time)/1000, "seconds")
-    CNF.remove_tautologies()    
-    
-    start_time = time.time()
-    for x in range(10000):    
-        CNF.remove_pure_literals()
-        CNF.undo_changes()
-    print("Remove pures + undo runtime: ", (time.time() - start_time)/10000, "seconds")
-    CNF.remove_pure_literals()
-
-    start_time = time.time()
-    for x in range(10000):    
-        CNF.remove_unit_clauses()
-        CNF.undo_changes()
-    print("Remove units + undo runtime: ", (time.time() - start_time)/10000, "seconds")
     
