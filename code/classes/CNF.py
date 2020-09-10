@@ -3,6 +3,7 @@
 import math
 import linecache
 import time
+from iteration_utilities import first
 
 
     
@@ -10,34 +11,163 @@ class CNF_Formula():
     """Represents a CNF_Formula, which is a conjuction of clauses"""
 
     def __init__(self):
+        
+        # The current recursive depth
+        self.current_depth = 0
+
         # Dict with variables thats are used to buid literal and thus clauses
         self.variable_dict = {}
 
         # List of clauses which form the CNF
         self.clauses = {}
+        self.active_clauses = []
+
+        # Hold the removed clauses like {"depth": [clauseid, clauseid]}
+        self.removed_clauses = {}
+        # Hold the removed literals like {"depth": [[clauseid, literal], [clauseid, literal]]}
+        self.removed_literals = {}
+        
+        # History of the variables assigned by branching
+        self.branch_history = {}
+
+
+    def remove_clause(self, clause_index):
+        """Correctly removes a clause"""
+        # Remove clause from variable_occurs_in
+        for literal in self.clauses[str(clause_index)]:
+            if literal < 0:
+                self.variable_dict[str(abs(literal))].occurs_negated_in.remove(clause_index)
+            if literal > 0:
+                self.variable_dict[str(abs(literal))].occurs_positive_in.remove(clause_index)
+        
+        self.active_clauses.remove(clause_index)
+
+        # Add to removed/depth log
+        if str(self.current_depth) not in self.removed_clauses:
+            self.removed_clauses[str(self.current_depth)] = []
+            
+        self.removed_clauses[str(self.current_depth)].append(clause_index)
+    
+
+    def undo_clause_remove(self, depth):
+        """ Undos the removal of clauses at a specific height"""
+        if str(depth) in self.removed_clauses:
+            for clause_index in self.removed_clauses[str(depth)]:
+                
+                # Reactivate clause
+                self.active_clauses.append(clause_index)
+
+                # Re-add clause to variable_occurs_in
+                for literal in self.clauses[str(clause_index)]:
+                    if literal < 0:
+                        self.variable_dict[str(abs(literal))].occurs_negated_in.add(clause_index)
+                    if literal > 0:
+                        self.variable_dict[str(abs(literal))].occurs_positive_in.add(clause_index)
+        
+        # Reset removed_clauses at that depth
+        self.removed_clauses[str(depth)] = []
+    
+
+    def remove_literal(self, clause_index, literal):
+        """"Propely removes a literal"""
+
+        # Remove from variable.occurs_in
+        if literal < 0:
+            self.variable_dict[str(abs(literal))].occurs_negated_in.remove(clause_index)
+        if literal > 0:
+            self.variable_dict[str(abs(literal))].occurs_positive_in.remove(clause_index)
+        
+        self.clauses[str(clause_index)].remove(literal)
+
+        if str(self.current_depth) not in self.removed_literals:
+            self.removed_literals[str(self.current_depth)] = []
+        self.removed_literals[str(self.current_depth)].append([clause_index, literal])
+    
+
+    def undo_branch(self, depth):
+        """Undos a branch at a specigic depth"""
+        self.variable_dict[str(self.branch_history[str(depth)])].boolean = None
+        self.undo_clause_remove(depth)
+        self.undo_literal_remove(depth)
+
+
+    def undo_literal_remove(self, depth):
+        """undos the removal of literals at a specific depth"""
+        
+        if str(depth) in self.removed_literals:
+            for clause_index, literal in self.removed_literals[str(depth)]:
+                
+                # Re-add literal
+                self.clauses[str(clause_index)].add(literal)
+
+                # Re add to occurs_in
+                if literal < 0:
+                    self.variable_dict[str(abs(literal))].occurs_negated_in.add(clause_index)
+                if literal > 0:
+                    self.variable_dict[str(abs(literal))].occurs_positive_in.add(clause_index)
+        
+        # Reset removed_clauses at that depth
+        self.removed_literals[str(depth)] = []
+    
+
+    def branch(self, variable, boolean):
+        """Branch the clauses by changing a variable to a boolean"""
+
+        # Set variable to boolean
+        self.variable_dict[str(variable)].boolean = boolean
+        if boolean:
+
+            # Remove clause if its satisfies the clause
+            for clause_index in self.variable_dict[str(variable)].occurs_positive_in.copy():
+                self.remove_clause(clause_index)
+            
+            # Only remove literal if clause not satisfied
+            for clause_index in self.variable_dict[str(variable)].occurs_negated_in.copy():
+                self.remove_literal(clause_index, -1*variable)
+
+        if not boolean:
+            # Only remove literal if clause not satisfied
+            for clause_index in self.variable_dict[str(variable)].occurs_positive_in.copy():
+                self.remove_literal(clause_index, (variable))
+
+            # Remove clause if its satisfies the clause
+            for clause_index in self.variable_dict[str(variable)].occurs_negated_in.copy():
+                self.remove_clause(clause_index)
+
+        self.branch_history[str(self.current_depth)] = variable
+                
+    def pick_active_variable(self):
+        """Picks the variable which will be branched"""
+        # Returns first literal (actually random though) of first active clause
+        return abs(first(self.clauses[str(self.active_clauses[0])]))
+    
 
     def remove_unit_clauses(self):
         """Remove unit clauses and add it to removed clauses"""
 
+
     def remove_pure_literals(self):
         """Remove all clauses with pure literals"""
         
+
     def remove_tautologies(self):
         """Returns if the CNF contains a tautology"""
-        
+
+
     def contains_empty_clause(self):
         """Returns if the CNF contains an empty clause and is thus unsatisfiable"""
         
         # Check if there exists a clause that is empty
-        for clause in self.clauses:
-            if not clause:
+        for clause_index in self.active_clauses:
+            if not self.clauses[str(clause_index)]:
                 return True
         return False
+
 
     def load_dimacs_string(self, string):
         """Encode a dimacs string and add it to the clause list of this CNF_formula"""
         
-        clause_counter = 0
+        clause_counter = len(self.clauses)
         # Every line is a clause
         for line in string.splitlines():
 
@@ -71,8 +201,10 @@ class CNF_Formula():
 
             # Make new clause and append to CNF clause list
             self.clauses[str(clause_counter)] = literal_set
+            self.active_clauses.append(clause_counter)
             clause_counter += 1
     
+
     def load_dimacs_file(self, file):
         """Accepts a dimac file and turns it into a string, then uses another method to encode it and add it to the clauses"""
         
@@ -82,6 +214,7 @@ class CNF_Formula():
 
         # Add string to clauses
         self.load_dimacs_string(string)
+
 
     def load_sudoku_file(self, mfile):
         # Opens the file, reads the number of sudokus (lines) in it and asks which sudoku you want to solve
@@ -106,6 +239,7 @@ class CNF_Formula():
             sudoku_dimacs = sudoku_dimacs +("{} 0\n".format(rule))
         
         # Use this method to encode the dimac file and add it to the CNF
+        print(sudoku_dimacs)
         self.load_dimacs_string(sudoku_dimacs)
 
     # Prints all clauses of the CNF
@@ -116,23 +250,49 @@ class CNF_Formula():
             print()
             return
         
-        for key, value in self.clauses.items():
+        for clause_key in sorted(self.active_clauses):
+            value = self.clauses[str(clause_key)]
             if not value:
-                print(f"{key}: empty clause")
+                print(f"{clause_key}: empty clause")
             else:
-                print(f"{key}: {value}")
+                print(f"{clause_key}: {value}")
         print()
     
+
     def print_variable_counts(self):
+        """Prints the records of in which clause literals are still located"""
+
         print("Variable name, followed by in which clauses it is located negated (-) and positive(+)")
-        for variable in self.variable_dict:
+        for variable in sorted(self.variable_dict):
             print("{} occurs in clauses: -:{}, +:{}".format(self.variable_dict[variable].variable_name, list(self.variable_dict[variable].occurs_negated_in), list(self.variable_dict[variable].occurs_positive_in)))
         print()
-    # Print the currently loaded variables and clauses
+        
+
     def print_status(self):
+        """Print the currently loaded variables and clauses"""
+
         print(f"Variables: {len(self.variable_dict)}, Clauses: {len(self.clauses)}")
         print()
 
+
+    def print_assignments(self):
+        for variable in sorted(self.variable_dict, key = lambda x: int(x)):
+            print(f"{variable}: {self.variable_dict[variable].boolean}")
+        print()
+
+
+    def print_total_status(self):
+
+        print("-------------------------------------------------------------")
+        print("Depth = {}\n".format(self.current_depth))
+        self.print_status()
+        self.print_clauses()
+        self.print_assignments()
+        self.print_variable_counts()
+        print("Removed clauses: ", self.removed_clauses)
+        print("Removed literals: ", self.removed_literals)
+        
+        print("-------------------------------------------------------------")
 
 
 class Variable():
@@ -152,13 +312,6 @@ class Variable():
         # A list
         self.occurs_in_clause_ids = []
 
-if __name__ == "__main__":
-    
-    CNF = CNF_Formula()
 
-    CNF.load_dimacs_file("test.txt")
-    CNF.print_status()
-    CNF.print_clauses()
-    CNF.print_variable_counts()
-    
-    
+if __name__ == "__main__":
+    pass
