@@ -24,11 +24,15 @@ class CNF_Formula():
 
         # Hold the removed clauses like {"depth": [clauseid, clauseid]}
         self.removed_clauses = {}
+
         # Hold the removed literals like {"depth": [[clauseid, literal], [clauseid, literal]]}
         self.removed_literals = {}
-        
+
         # History of the variables assigned by branching
         self.branch_history = {}
+        
+
+        
 
 
     def remove_clause(self, clause_index):
@@ -86,7 +90,9 @@ class CNF_Formula():
 
     def undo_branch(self, depth):
         """Undos a branch at a specigic depth"""
-        self.variable_dict[str(self.branch_history[str(depth)])].boolean = None
+        if str(depth) in self.branch_history:
+            for var in self.branch_history[str(depth)]:
+                self.variable_dict[str(var)].boolean = None
         self.undo_clause_remove(depth)
         self.undo_literal_remove(depth)
 
@@ -134,24 +140,78 @@ class CNF_Formula():
             for clause_index in self.variable_dict[str(variable)].occurs_negated_in.copy():
                 self.remove_clause(clause_index)
 
-        self.branch_history[str(self.current_depth)] = variable
+        if not str(self.current_depth) in self.branch_history:
+            self.branch_history[str(self.current_depth)] = []
+        self.branch_history[str(self.current_depth)].append(variable)
                 
-    def pick_active_variable(self):
+    def pick_active_variable(self, heuristic_name):
         """Picks the variable which will be branched"""
         # Returns first literal (actually random though) of first active clause
-        return abs(first(self.clauses[str(self.active_clauses[0])]))
+        if heuristic_name == "pick-first":
+            return abs(first(self.clauses[str(self.active_clauses[0])]))
+
+
     
 
     def remove_unit_clauses(self):
         """Remove unit clauses and add it to removed clauses"""
-
-
+        active_clauses_index = 0
+        while active_clauses_index < len(self.active_clauses):
+            clause_id = self.active_clauses[active_clauses_index]
+            if len(self.clauses[str(clause_id)]) == 1:
+                literal = first(self.clauses[str(clause_id)])
+                
+                # We save unit clauses in the minus version of the current depth
+                self.current_depth *= -1
+                boolean = (literal > 0)
+                self.branch(abs(literal), boolean)
+                self.current_depth *= -1
+                
+                # We want to reset the search for unit clauses because new ones could have been created
+                active_clauses_index = 0
+            else:
+                active_clauses_index += 1
+    
+    def undo_unit_clauses(self):
+        self.undo_branch(self.current_depth * -1)
+    
     def remove_pure_literals(self):
         """Remove all clauses with pure literals"""
+        for variable in self.variable_dict:
+            variable = self.variable_dict[variable]
+            
+            if not variable.occurs_negated_in.copy():
+                self.branch(variable.variable_name, True)
+            
+            elif not variable.occurs_positive_in.copy():
+                self.branch(variable.variable_name, False)
         
+        # Clear history, you dont want to turn this back
+        if str(0) in self.removed_clauses:
+            del self.removed_clauses[str(0)]
+        if str(0) in self.removed_literals:
+            del self.removed_literals[str(0)]
+        if str(0) in self.branch_history:
+            del self.branch_history[str(0)]
 
     def remove_tautologies(self):
-        """Returns if the CNF contains a tautology"""
+        """Removes all the clauses containing a tautology"""
+        # Check for every variable if it is both in negated and postive form in the same clause
+        for variable in self.variable_dict:
+            variable = self.variable_dict[variable]
+            for occurs_negated in variable.occurs_negated_in.copy():
+                if occurs_negated in variable.occurs_positive_in:
+                    self.remove_clause(occurs_negated)
+        
+        # Clear history, you dont want to turn this back
+        if str(0) in self.removed_clauses:
+            del self.removed_clauses[str(0)]
+        if str(0) in self.removed_literals:
+            del self.removed_literals[str(0)]
+        if str(0) in self.branch_history:
+            del self.branch_history[str(0)]
+
+
 
 
     def contains_empty_clause(self):
@@ -239,7 +299,6 @@ class CNF_Formula():
             sudoku_dimacs = sudoku_dimacs +("{} 0\n".format(rule))
         
         # Use this method to encode the dimac file and add it to the CNF
-        print(sudoku_dimacs)
         self.load_dimacs_string(sudoku_dimacs)
 
     # Prints all clauses of the CNF
@@ -263,7 +322,7 @@ class CNF_Formula():
         """Prints the records of in which clause literals are still located"""
 
         print("Variable name, followed by in which clauses it is located negated (-) and positive(+)")
-        for variable in sorted(self.variable_dict):
+        for variable in sorted(self.variable_dict, key = lambda x: int(x) ):
             print("{} occurs in clauses: -:{}, +:{}".format(self.variable_dict[variable].variable_name, list(self.variable_dict[variable].occurs_negated_in), list(self.variable_dict[variable].occurs_positive_in)))
         print()
         
@@ -271,7 +330,7 @@ class CNF_Formula():
     def print_status(self):
         """Print the currently loaded variables and clauses"""
 
-        print(f"Variables: {len(self.variable_dict)}, Clauses: {len(self.clauses)}")
+        print(f"Variables: {len(self.variable_dict)}, Clauses: {len(self.active_clauses)}")
         print()
 
 
@@ -280,6 +339,12 @@ class CNF_Formula():
             print(f"{variable}: {self.variable_dict[variable].boolean}")
         print()
 
+    def print_answer(self):
+        print("Sudoku answer: ")
+        for variable in sorted(self.variable_dict, key = lambda x: int(x)):
+            if self.variable_dict[variable].boolean == True:
+                print(f"{variable}: {self.variable_dict[variable].boolean}")
+        print()
 
     def print_total_status(self):
 
@@ -309,8 +374,6 @@ class Variable():
         self.occurs_negated_in = set()
         self.occurs_positive_in = set()
 
-        # A list
-        self.occurs_in_clause_ids = []
 
 
 if __name__ == "__main__":
