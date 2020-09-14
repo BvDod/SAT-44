@@ -10,6 +10,10 @@ class SAT_Solver():
         sys.setrecursionlimit(5000)
         # Use this in the future to counter iterations
         self.iterations_counter = 0
+
+        # Are we currently backtracking?
+        self.backtracking = False
+        self.backtracking_depth = None
     
     def load_dimacs_file(self, file):
         self.CNF.load_dimacs_file(file)
@@ -22,13 +26,15 @@ class SAT_Solver():
 
     def solve_CNF(self):
         self.CNF.remove_pure_literals()
-        self.CNF.remove_tautologies()
+        self.CNF.remove_unit_clauses()
         
-        if DPLL(self) == "SAT":
-            print("SAT!")
-            self.print_answer
+
+        result = DPLL(self)
+        if result == "SAT":
+            print("\nSAT!")
+            self.print_answer()
         else:
-            print("UNSAT")
+            print(result)
     
     def print_answer(self):
         self.CNF.print_answer()
@@ -37,9 +43,10 @@ class SAT_Solver():
 if __name__ == "__main__":
     
     Solver = SAT_Solver()
-    Solver.load_dimacs_file("rules.txt")
-    Solver.load_sudoku_file("9x9.txt")
+    Solver.load_dimacs_file("files/rules.txt")
+    Solver.load_sudoku_file("files/9x9.txt")
+    print()
     before = time.time()
     Solver.solve_CNF()
-    Solver.print_answer()
+    # Solver.CNF.print_total_status()
     print("Time:", time.time() - before)

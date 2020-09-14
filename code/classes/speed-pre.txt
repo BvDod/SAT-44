@@ -1,0 +1,467 @@
+Loading file files/9x9.txt
+1011 sudokus have been found in this file.
+Which one should we solve ?
+
+Found learning clause:  [225, 315, 325, 335, 115, 215, -122, 247, 257, 267, 227, 297, 224, 314, 324, 334, 114, 226, 316, 326, 336, 136, 236, 116, 393, 193, 293, 183, 283, 383, 173, 384, 385, 386, 381, 388, 382, 392, 192, 292, 182, 282, 347, 341, 344, 345, 346, 348, 249, 241, 244, 245, 248, 259, 251, 254, 255, 252, 258, 166, 176, 186, 196, 156]
+backtracking:  0
+done
+Found learning clause:  [144, 244, 344, 544, 744, 944, 543, 943, 443, 643, 143, 467, 461, 465, 462, 468, 469, 463, 257, 259, 251, 254, 255, 252, 258, 736, 734, 738, 731, 732, 696, 616, 626, 636, 676, 666, 686, 226, 316, 326, 336, 136, 236, 116, 225, 315, 325, 335, 115, 215, 247, 267, 227, 297, 429, 529, 629, 539, 619, 639, 519, -124, 166, 176, 186, 196, 156, 279, 271, 276, 274, 278, 384, 385, 386, 381, 388, 383, 382, 618, 818, 718, 918, 218, 118, 518, 249, 241, 245, 248, 347, 341, 345, 346, 348, 351, 361, 391, 331, 371, 352, 362, 392, 312, 353, 363, 393, 323, 313, 333, 922, 932, 912, 712, 722, 812, 836, 936, 926, 525, 425, 625, 925, 825]
+backtracking:  0
+done
+Found learning clause:  [633, 636, 635, 638, 639, 631, 632, 137, 139, 136, 131, 138, 133, 247, 257, 267, 227, 297, -125, 472, 572, 672, 772, 872, 972, 226, 316, 326, 336, 236, 116, 384, 385, 386, 381, 388, 383, 382, 249, 241, 244, 245, 248, 393, 193, 293, 183, 283, 173, 347, 341, 344, 345, 346, 348, 166, 176, 186, 196, 156, 259, 251, 254, 255, 252, 258]
+backtracking:  0
+done
+Found learning clause:  [166, 266, 366, 566, 866, 766, 666, 696, 616, 626, 636, 676, 686, 954, 974, 984, 994, 924, 934, 944, 224, 314, 324, 334, 114, 124, -132, 225, 265, 245, 255, 215, 295, 177, 176, 174, 178, 171, 173, 147, 141, 144, 145, 148, 143, 146]
+backtracking:  0
+done
+Found learning clause:  [211, 511, 611, 811, 711, 911, 111, 228, 128, 328, 218, 238, 118, 138, 429, 422, 423, 426, 425, 428, 352, 362, 392, 312, 382, 654, 674, 684, 694, 614, 664, 633, 636, 635, 638, 639, 631, 632, -134, 279, 271, 276, 274, 278, 147, 141, 144, 145, 148, 143, 146, 852, 862, 892, 872, 882, 842, 812, 467, 461, 465, 462, 468, 469, 463, 225, 315, 325, 335, 115, 215, 125, 219, 212, 213, 216, 257, 259, 251, 254, 255, 252, 258, 319, 329, 339, 359, 369, 399, 823, 853, 863, 873, 883, 893, 813, 652, 655, 658, 659, 651, 653, 177, 187, 197, 397, 297, 393, 193, 293, 183, 283, 383, 173, 754, 854, 954, 744, 764, 864, 944, 166, 266, 366, 566, 866, 766, 666]
+backtracking:  0
+done
+Found learning clause:  [127, 227, 527, 927, 727, 852, 862, 892, 872, 882, 842, 812, 177, 187, 197, 397, 297, 633, 636, 635, 638, 639, 631, 632, 823, 853, 863, 873, 883, 893, 813, 225, 265, 245, 255, 215, 295, 235, 472, 572, 672, 772, 972, 353, 363, 393, 323, 383, 313, 333, 224, 264, 244, 254, 274, 294, 284, 854, 874, 884, 894, 864, -142, 169, 249, 259, 269, 359, 369, 159, 954, 974, 984, 994, 924, 934, 944, 166, 266, 366, 566, 866, 766, 666, 186, 286, 386, 586, 786, 986, 686, 289, 589, 489, 689, 789, 989, 189]
+backtracking:  0
+done
+Found learning clause:  [166, 266, 366, 566, 866, 766, 666, 496, 596, 696, 576, 586, 676, 686, 954, 974, 984, 994, 924, 934, 944, -214]
+backtracking:  0
+done
+Found learning clause:  [-113]
+Found learning clause:  [-114]
+Found learning clause:  [-122]
+Found learning clause:  [-124]
+Found learning clause:  [-132]
+
+SAT!
+Sudoku answer: 
+116: True
+125: True
+133: True
+142: True
+158: True
+167: True
+179: True
+184: True
+191: True
+217: True
+229: True
+234: True
+246: True
+253: True
+261: True
+272: True
+285: True
+298: True
+311: True
+322: True
+338: True
+349: True
+354: True
+365: True
+373: True
+387: True
+396: True
+418: True
+421: True
+439: True
+447: True
+452: True
+464: True
+475: True
+486: True
+493: True
+512: True
+523: True
+536: True
+548: True
+555: True
+569: True
+574: True
+581: True
+597: True
+615: True
+624: True
+637: True
+641: True
+656: True
+663: True
+678: True
+682: True
+699: True
+719: True
+726: True
+735: True
+743: True
+757: True
+762: True
+771: True
+788: True
+794: True
+813: True
+827: True
+832: True
+844: True
+851: True
+868: True
+876: True
+889: True
+895: True
+914: True
+928: True
+931: True
+945: True
+959: True
+966: True
+977: True
+983: True
+992: True
+
+Time: 6.466446161270142
+         14814040 function calls (14813425 primitive calls) in 6.702 seconds
+
+   Ordered by: internal time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+       33    2.360    0.072    4.980    0.151 CNF.py:185(remove_unit_clauses)
+   347638    1.175    0.000    1.175    0.000 {method 'remove' of 'list' objects}
+       12    0.936    0.078    1.019    0.085 CNF.py:248(learn_clause)
+10847576/10847444    0.614    0.000    0.614    0.000 {built-in method builtins.len}
+   194647    0.397    0.000    0.478    0.000 CNF.py:76(remove_literal)
+   155911    0.263    0.000    1.455    0.000 CNF.py:39(remove_clause)
+       48    0.214    0.004    0.276    0.006 CNF.py:111(undo_literal_remove)
+        1    0.168    0.168    0.168    0.168 {built-in method builtins.input}
+       48    0.127    0.003    0.161    0.003 CNF.py:57(undo_clause_remove)
+     9440    0.089    0.000    2.032    0.000 CNF.py:132(branch)
+  1398087    0.087    0.000    0.087    0.000 {built-in method builtins.abs}
+   541393    0.058    0.000    0.058    0.000 {method 'remove' of 'set' objects}
+   552940    0.054    0.000    0.054    0.000 {method 'add' of 'set' objects}
+   712213    0.049    0.000    0.049    0.000 {method 'append' of 'list' objects}
+        2    0.035    0.018    0.045    0.022 CNF.py:357(load_dimacs_string)
+     5998    0.014    0.000    0.014    0.000 CNF.py:270(<listcomp>)
+    20338    0.010    0.000    0.010    0.000 {method 'copy' of 'set' objects}
+       20    0.010    0.000    0.012    0.001 CNF.py:165(pick_active_variable)
+       48    0.009    0.000    0.446    0.009 CNF.py:98(undo_branch)
+      124    0.005    0.000    0.005    0.000 {built-in method nt.stat}
+       31    0.004    0.000    0.004    0.000 CNF.py:347(contains_empty_clause)
+        1    0.002    0.002    0.002    0.002 {built-in method builtins.compile}
+    12014    0.002    0.000    0.002    0.000 {method 'split' of 'str' objects}
+        2    0.002    0.001    0.002    0.001 {built-in method _imp.create_dynamic}
+       33    0.001    0.000    0.001    0.000 {built-in method io.open_code}
+       33    0.001    0.000    0.001    0.000 {method 'read' of '_io.BufferedReader' objects}
+       19    0.001    0.000    0.001    0.000 {built-in method marshal.loads}
+       23    0.001    0.000    0.001    0.000 {built-in method builtins.__build_class__}
+    59/12    0.001    0.000    0.002    0.000 sre_parse.py:493(_parse)
+        1    0.001    0.001    0.001    0.001 {built-in method nt.replace}
+      729    0.001    0.000    0.001    0.000 CNF.py:504(__init__)
+        1    0.001    0.001    0.001    0.001 CNF.py:212(remove_pure_literals)
+       73    0.000    0.000    0.005    0.000 <frozen importlib._bootstrap_external>:1431(find_spec)
+   119/10    0.000    0.000    0.001    0.000 sre_compile.py:71(_compile)
+        2    0.000    0.000    0.000    0.000 {method 'splitlines' of 'str' objects}
+       13    0.000    0.000    0.000    0.000 {built-in method _codecs.charmap_decode}
+        2    0.000    0.000    0.001    0.000 {method 'readlines' of '_io._IOBase' objects}
+        1    0.000    0.000    0.001    0.001 <frozen importlib._bootstrap_external>:120(_write_atomic)
+      113    0.000    0.000    0.001    0.000 {built-in method builtins.print}
+       33    0.000    0.000    0.003    0.000 <frozen importlib._bootstrap_external>:969(get_data)
+      982    0.000    0.000    0.000    0.000 sre_parse.py:233(__next)
+        3    0.000    0.000    0.000    0.000 {built-in method io.open}
+      854    0.000    0.000    0.000    0.000 sre_parse.py:164(__getitem__)
+      8/1    0.000    0.000    5.276    5.276 DPLL.py:5(DPLL)
+        1    0.000    0.000    0.000    0.000 {built-in method nt.open}
+      865    0.000    0.000    0.000    0.000 sre_parse.py:254(get)
+     24/1    0.000    0.000    6.702    6.702 {built-in method builtins.exec}
+       20    0.000    0.000    0.008    0.000 <frozen importlib._bootstrap_external>:849(get_code)
+   147/41    0.000    0.000    0.000    0.000 sre_parse.py:174(getwidth)
+      359    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:62(_path_join)
+      359    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:64(<listcomp>)
+       52    0.000    0.000    0.000    0.000 sre_compile.py:276(_optimize_charset)
+     30/2    0.000    0.000    0.023    0.011 <frozen importlib._bootstrap>:986(_find_and_load)
+        3    0.000    0.000    0.000    0.000 __init__.py:313(namedtuple)
+       23    0.000    0.000    0.005    0.000 <frozen importlib._bootstrap_external>:1302(_get_spec)
+      729    0.000    0.000    0.000    0.000 CNF.py:482(<lambda>)
+      267    0.000    0.000    0.000    0.000 cp1252.py:18(encode)
+        1    0.000    0.000    0.000    0.000 {method 'read' of '_io.TextIOWrapper' objects}
+       28    0.000    0.000    0.005    0.000 <frozen importlib._bootstrap>:890(_find_spec)
+     1250    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+        1    0.000    0.000    0.000    0.000 CNF.py:480(print_answer)
+    53/10    0.000    0.000    0.002    0.000 sre_parse.py:435(_parse_sub)
+        2    0.000    0.000    0.000    0.000 {built-in method nt.listdir}
+        1    0.000    0.000    0.001    0.001 tokenize.py:1(<module>)
+      267    0.000    0.000    0.000    0.000 {built-in method _codecs.charmap_encode}
+       40    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:294(cache_from_source)
+        8    0.000    0.000    0.000    0.000 {built-in method __new__ of type object at 0x00007FFC7414B810}
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.sorted}
+        1    0.000    0.000    0.169    0.169 CNF.py:409(load_sudoku_file)
+       27    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:477(_init_module_attrs)
+      493    0.000    0.000    0.000    0.000 {method 'join' of 'str' objects}
+       36    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:157(_get_module_lock)
+     27/2    0.000    0.000    0.022    0.011 <frozen importlib._bootstrap>:650(_load_unlocked)
+        1    0.000    0.000    0.000    0.000 {method 'write' of '_io.FileIO' objects}
+      130    0.000    0.000    0.000    0.000 sre_parse.py:111(__init__)
+      153    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+       12    0.000    0.000    0.000    0.000 {built-in method _imp.source_hash}
+      387    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:222(_verbose_message)
+       41    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:68(_path_split)
+     20/2    0.000    0.000    0.022    0.011 <frozen importlib._bootstrap_external>:777(exec_module)
+       10    0.000    0.000    0.004    0.000 re.py:289(_compile)
+      758    0.000    0.000    0.000    0.000 {method 'rstrip' of 'str' objects}
+       60    0.000    0.000    0.000    0.000 {built-in method _thread.allocate_lock}
+      279    0.000    0.000    0.000    0.000 sre_parse.py:160(__len__)
+     30/2    0.000    0.000    0.022    0.011 <frozen importlib._bootstrap>:956(_find_and_load_unlocked)
+      319    0.000    0.000    0.000    0.000 sre_parse.py:249(match)
+       52    0.000    0.000    0.000    0.000 sre_compile.py:249(_compile_charset)
+      221    0.000    0.000    0.000    0.000 sre_parse.py:172(append)
+      195    0.000    0.000    0.000    0.000 sre_parse.py:286(tell)
+       36    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:78(acquire)
+        7    0.000    0.000    0.000    0.000 {built-in method _abc._abc_init}
+        5    0.000    0.000    0.000    0.000 {built-in method _imp.create_builtin}
+      123    0.000    0.000    0.005    0.000 <frozen importlib._bootstrap_external>:80(_path_stat)
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:629(spec_from_file_location)
+       42    0.000    0.000    0.000    0.000 abc.py:7(abstractmethod)
+       36    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:103(release)
+        1    0.000    0.000    0.000    0.000 {built-in method marshal.dumps}
+      249    0.000    0.000    0.000    0.000 {built-in method builtins.min}
+       87    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1265(_path_importer_cache)
+       47    0.000    0.000    0.000    0.000 sre_parse.py:355(_escape)
+        3    0.000    0.000    0.000    0.000 tokenize.py:83(_all_string_prefixes)
+      196    0.000    0.000    0.000    0.000 {built-in method builtins.hasattr}
+    27/26    0.000    0.000    0.003    0.000 <frozen importlib._bootstrap>:549(module_from_spec)
+       10    0.000    0.000    0.003    0.000 sre_compile.py:759(compile)
+        1    0.000    0.000    0.001    0.001 random.py:1(<module>)
+        1    0.000    0.000    0.000    0.000 linecache.py:82(updatecache)
+      178    0.000    0.000    0.000    0.000 {method 'rpartition' of 'str' objects}
+       19    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:578(_compile_bytecode)
+       20    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:493(_classify_pyc)
+        1    0.000    0.000    0.014    0.014 __init__.py:3(<module>)
+      138    0.000    0.000    0.000    0.000 {method 'find' of 'bytearray' objects}
+       66    0.000    0.000    0.000    0.000 sre_compile.py:423(_simple)
+        1    0.000    0.000    0.001    0.001 copy.py:1(<module>)
+       10    0.000    0.000    0.000    0.000 sre_compile.py:536(_compile_info)
+      195    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+       30    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:58(__init__)
+       30    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:176(cb)
+       13    0.000    0.000    0.000    0.000 {built-in method _codecs.utf_8_decode}
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1426(_get_spec)
+        1    0.000    0.000    0.009    0.009 _classes.py:3(<module>)
+       30    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:147(__enter__)
+        1    0.000    0.000    0.005    0.005 statistics.py:1(<module>)
+       22    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:424(_get_cached)
+       56    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+       13    0.000    0.000    0.000    0.000 codecs.py:319(decode)
+       31    0.000    0.000    0.000    0.000 sre_parse.py:84(opengroup)
+     37/3    0.000    0.000    0.020    0.007 <frozen importlib._bootstrap>:211(_call_with_frames_removed)
+       33    0.000    0.000    0.000    0.000 sre_parse.py:432(_uniq)
+       10    0.000    0.000    0.002    0.000 sre_parse.py:937(parse)
+       35    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:51(_unpack_uint32)
+        1    0.000    0.000    0.000    0.000 {method 'readline' of '_io.BufferedReader' objects}
+       24    0.000    0.000    0.212    0.009 CNF.py:209(undo_unit_clauses)
+       21    0.000    0.000    0.000    0.000 {built-in method _imp.is_builtin}
+        1    0.000    0.000    0.000    0.000 tokenize.py:388(open)
+       74    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:867(__exit__)
+       11    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1017(_handle_fromlist)
+       42    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:376(cached)
+      8/4    0.000    0.000    0.000    0.000 {built-in method _abc._abc_subclasscheck}
+        1    0.000    0.000    6.702    6.702 solver.py:1(<module>)
+        1    0.000    0.000    0.000    0.000 token.py:74(<dictcomp>)
+       30    0.000    0.000    0.000    0.000 sre_parse.py:295(_class_escape)
+       27    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:90(_path_is_mode_type)
+       82    0.000    0.000    0.000    0.000 sre_parse.py:81(groups)
+       20    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:1010(path_stats)
+       23    0.000    0.000    0.005    0.000 <frozen importlib._bootstrap_external>:1334(find_spec)
+       73    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:36(_relax_case)
+       74    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:863(__enter__)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1479(_fill_cache)
+     13/8    0.000    0.000    0.000    0.000 sre_compile.py:461(_get_literal_prefix)
+       16    0.000    0.000    0.000    0.000 {built-in method nt.getcwd}
+       28    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:342(__init__)
+       69    0.000    0.000    0.000    0.000 sre_parse.py:168(__setitem__)
+       41    0.000    0.000    0.000    0.000 {method 'rsplit' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 _classes.py:59(_Base)
+        1    0.000    0.000    0.045    0.045 CNF.py:398(load_dimacs_file)
+       10    0.000    0.000    0.000    0.000 enum.py:833(__and__)
+      140    0.000    0.000    0.000    0.000 {built-in method _imp.acquire_lock}
+        1    0.000    0.000    0.002    0.002 platform.py:3(<module>)
+       20    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:456(_check_name_wrapper)
+       47    0.000    0.000    0.000    0.000 re.py:270(escape)
+       19    0.000    0.000    0.000    0.000 {built-in method _imp._fix_co_filename}
+        1    0.000    0.000    0.000    0.000 _classes.py:1002(Iterable)
+       34    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:389(parent)
+       33    0.000    0.000    0.000    0.000 {built-in method fromkeys}
+      140    0.000    0.000    0.000    0.000 {built-in method _imp.release_lock}
+       85    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+       20    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:35(_new_module)
+       10    0.000    0.000    0.000    0.000 {built-in method _sre.compile}
+       30    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:151(__exit__)
+       24    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:99(_path_isfile)
+       25    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+        1    0.000    0.000    0.002    0.002 decimal.py:2(<module>)
+        1    0.000    0.000    0.000    0.000 token.py:1(<module>)
+       28    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:725(find_spec)
+       10    0.000    0.000    0.000    0.000 sre_parse.py:224(__init__)
+       22    0.000    0.000    0.000    0.000 enum.py:283(__call__)
+       10    0.000    0.000    0.001    0.000 sre_compile.py:598(_code)
+       31    0.000    0.000    0.000    0.000 sre_parse.py:96(closegroup)
+        1    0.000    0.000    0.000    0.000 fractions.py:60(Fraction)
+       22    0.000    0.000    0.000    0.000 enum.py:562(__new__)
+       41    0.000    0.000    0.000    0.000 sre_compile.py:65(_combine_flags)
+      157    0.000    0.000    0.000    0.000 {built-in method builtins.ord}
+        1    0.000    0.000    0.003    0.003 fractions.py:4(<module>)
+        1    0.000    0.000    0.003    0.003 _recipes.py:5(<module>)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.round}
+        4    0.000    0.000    0.000    0.000 sre_compile.py:413(<listcomp>)
+       47    0.000    0.000    0.000    0.000 {method 'translate' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 tokenize.py:295(detect_encoding)
+       30    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:143(__init__)
+        7    0.000    0.000    0.000    0.000 abc.py:84(__new__)
+        1    0.000    0.000    0.000    0.000 {function Random.seed at 0x000001D30015AA60}
+        1    0.000    0.000    0.000    0.000 abc.py:1(<module>)
+        5    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:406(spec_from_loader)
+        3    0.000    0.000    0.000    0.000 {method 'match' of 're.Pattern' objects}
+       13    0.000    0.000    0.000    0.000 cp1252.py:22(decode)
+       22    0.000    0.000    0.000    0.000 {method 'extend' of 'list' objects}
+        7    0.000    0.000    0.000    0.000 sre_compile.py:492(_get_charset_prefix)
+        8    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:526(_validate_timestamp_pyc)
+       18    0.000    0.000    0.000    0.000 types.py:171(__get__)
+        4    0.000    0.000    0.000    0.000 sre_compile.py:411(_mk_bitmap)
+        1    0.000    0.000    0.000    0.000 random.py:78(Random)
+       72    0.000    0.000    0.000    0.000 {built-in method _thread.get_ident}
+       24    0.000    0.000    0.000    0.000 tokenize.py:94(<listcomp>)
+        1    0.000    0.000    6.465    6.465 solver.py:27(solve_CNF)
+        1    0.000    0.000    0.000    0.000 numbers.py:4(<module>)
+       35    0.000    0.000    0.000    0.000 {built-in method from_bytes}
+        1    0.000    0.000    0.000    0.000 _additional_recipes.py:3(<module>)
+       23    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:800(find_spec)
+        2    0.000    0.000    0.000    0.000 {built-in method _locale._getdefaultlocale}
+        2    0.000    0.000    0.000    0.000 {built-in method math.sqrt}
+        1    0.000    0.000    0.000    0.000 _convenience.py:3(<module>)
+        1    0.000    0.000    0.000    0.000 enum.py:869(_decompose)
+        1    0.000    0.000    0.045    0.045 solver.py:18(load_dimacs_file)
+        1    0.000    0.000    0.018    0.018 CNF.py:3(<module>)
+       19    0.000    0.000    0.000    0.000 tokenize.py:58(group)
+        5    0.000    0.000    0.000    0.000 sre_parse.py:267(getuntil)
+        2    0.000    0.000    0.000    0.000 <frozen zipimport>:63(__init__)
+       62    0.000    0.000    0.000    0.000 {built-in method nt.fspath}
+        1    0.000    0.000    0.000    0.000 statistics.py:899(NormalDist)
+        2    0.000    0.000    0.000    0.000 platform.py:972(_sys_version)
+       20    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:939(__init__)
+       20    0.000    0.000    0.000    0.000 sre_compile.py:595(isstring)
+       27    0.000    0.000    0.000    0.000 {method 'pop' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:591(_code_to_timestamp_pyc)
+       10    0.000    0.000    0.000    0.000 sre_parse.py:921(fix_flags)
+        1    0.000    0.000    0.000    0.000 CNF.py:10(CNF_Formula)
+        1    0.000    0.000    0.000    0.000 numbers.py:32(Complex)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1252(_path_hooks)
+       23    0.000    0.000    0.000    0.000 {built-in method _imp.is_frozen}
+       12    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:554(_validate_hash_pyc)
+        1    0.000    0.000    0.001    0.001 linecache.py:37(getlines)
+        7    0.000    0.000    0.000    0.000 fractions.py:302(_operator_fallbacks)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1394(__init__)
+        1    0.000    0.000    0.003    0.003 _utils.py:4(<module>)
+        2    0.000    0.000    0.000    0.000 _bootlocale.py:11(getpreferredencoding)
+        5    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:232(_requires_builtin_wrapper)
+       12    0.000    0.000    0.000    0.000 {method 'copy' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 enum.py:886(<listcomp>)
+       10    0.000    0.000    0.000    0.000 sre_parse.py:76(__init__)
+        1    0.000    0.000    0.169    0.169 solver.py:21(load_sudoku_file)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:194(_lock_unlock_module)
+        5    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:746(create_module)
+        3    0.000    0.000    0.000    0.000 {built-in method builtins.repr}
+        2    0.000    0.000    0.002    0.001 <frozen importlib._bootstrap_external>:1099(create_module)
+        1    0.000    0.000    0.000    0.000 enum.py:797(_create_pseudo_member_)
+        1    0.000    0.000    0.001    0.001 <frozen importlib._bootstrap_external>:1020(set_data)
+        1    0.000    0.000    0.000    0.000 bisect.py:1(<module>)
+        1    0.000    0.000    0.000    0.000 numbers.py:294(Integral)
+        1    0.000    0.000    0.002    0.002 linecache.py:1(<module>)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1520(path_hook_for_FileFinder)
+       10    0.000    0.000    0.004    0.000 re.py:250(compile)
+        1    0.000    0.000    0.000    0.000 numbers.py:147(Real)
+       17    0.000    0.000    0.000    0.000 __init__.py:385(<genexpr>)
+        1    0.000    0.000    0.000    0.000 tokenize.py:325(find_cookie)
+        1    0.000    0.000    0.000    0.000 random.py:123(seed)
+        7    0.000    0.000    0.000    0.000 {built-in method builtins.setattr}
+       17    0.000    0.000    0.000    0.000 {built-in method sys.intern}
+        1    0.000    0.000    0.000    0.000 {built-in method sys.setrecursionlimit}
+        1    0.000    0.000    0.000    0.000 enum.py:827(__or__)
+        4    0.000    0.000    0.000    0.000 {built-in method _abc._abc_register}
+       27    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:397(has_location)
+        1    0.000    0.000    0.000    0.000 solver.py:8(__init__)
+        1    0.000    0.000    0.000    0.000 tokenize.py:319(read_or_stop)
+        1    0.000    0.000    0.000    0.000 _classes.py:2023(ManyIterables)
+       36    0.000    0.000    0.000    0.000 {method 'upper' of 'str' objects}
+       20    0.000    0.000    0.000    0.000 sre_compile.py:453(_get_iscased)
+        8    0.000    0.000    0.000    0.000 {method 'replace' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 DPLL.py:1(<module>)
+      8/4    0.000    0.000    0.000    0.000 abc.py:100(__subclasscheck__)
+       22    0.000    0.000    0.000    0.000 {method 'isidentifier' of 'str' objects}
+        1    0.000    0.000    0.001    0.001 linecache.py:15(getline)
+       20    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:964(get_filename)
+       17    0.000    0.000    0.000    0.000 {method '__contains__' of 'frozenset' objects}
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1508(<setcomp>)
+        1    0.000    0.000    0.000    0.000 {built-in method math.exp}
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:46(_pack_uint32)
+        5    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:754(exec_module)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1107(exec_module)
+       11    0.000    0.000    0.000    0.000 enum.py:659(name)
+       16    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1400(<genexpr>)
+        4    0.000    0.000    0.000    0.000 abc.py:89(register)
+      2/1    0.000    0.000    0.001    0.001 {built-in method builtins.__import__}
+        1    0.000    0.000    0.000    0.000 enum.py:852(_high_bit)
+        1    0.000    0.000    0.000    0.000 sre_compile.py:432(_generate_overlap_table)
+        2    0.000    0.000    0.000    0.000 {built-in method _imp.exec_dynamic}
+        1    0.000    0.000    0.000    0.000 codecs.py:309(__init__)
+       11    0.000    0.000    0.000    0.000 {method 'partition' of 'str' objects}
+       20    0.000    0.000    0.000    0.000 {method 'lower' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 CNF.py:13(__init__)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:104(_path_isdir)
+       20    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:774(create_module)
+        3    0.000    0.000    0.000    0.000 codecs.py:260(__init__)
+        1    0.000    0.000    0.001    0.001 <frozen importlib._bootstrap_external>:1015(_cache_bytecode)
+        2    0.000    0.000    0.000    0.000 {built-in method math.log}
+       12    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+        9    0.000    0.000    0.000    0.000 {built-in method builtins.max}
+        2    0.000    0.000    0.000    0.000 {built-in method time.time}
+        4    0.000    0.000    0.000    0.000 {method 'translate' of 'bytearray' objects}
+        2    0.000    0.000    0.000    0.000 platform.py:1076(python_implementation)
+        1    0.000    0.000    0.000    0.000 solver.py:6(SAT_Solver)
+        1    0.000    0.000    0.002    0.002 <frozen importlib._bootstrap_external>:841(source_to_code)
+        1    0.000    0.000    0.000    0.000 random.py:103(__init_subclass__)
+        1    0.000    0.000    0.000    0.000 enum.py:790(_missing_)
+        1    0.000    0.000    0.000    0.000 solver.py:39(print_answer)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1088(__init__)
+        1    0.000    0.000    0.000    0.000 numbers.py:267(Rational)
+        8    0.000    0.000    0.000    0.000 {built-in method _sre.unicode_iscased}
+        1    0.000    0.000    0.000    0.000 {method 'startswith' of 'bytes' objects}
+        1    0.000    0.000    0.000    0.000 {method 'sort' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:436(_calc_mode)
+        4    0.000    0.000    0.000    0.000 {method 'extend' of 'bytearray' objects}
+        2    0.000    0.000    0.000    0.000 enum.py:904(_power_of_two)
+        1    0.000    0.000    0.000    0.000 {method 'seek' of '_io.BufferedReader' objects}
+        5    0.000    0.000    0.000    0.000 {built-in method _imp.exec_builtin}
+        1    0.000    0.000    0.000    0.000 CNF.py:501(Variable)
+        1    0.000    0.000    0.000    0.000 tokenize.py:45(TokenInfo)
+        1    0.000    0.000    0.000    0.000 tokenize.py:59(any)
+        1    0.000    0.000    0.000    0.000 random.py:94(__init__)
+        7    0.000    0.000    0.000    0.000 enum.py:664(value)
+        1    0.000    0.000    0.000    0.000 tokenize.py:162(Untokenizer)
+        1    0.000    0.000    0.000    0.000 _utils.py:20(_SentinelFactory)
+        1    0.000    0.000    0.000    0.000 {method 'decode' of 'bytes' objects}
+        2    0.000    0.000    0.000    0.000 tokenize.py:60(maybe)
+        1    0.000    0.000    0.000    0.000 random.py:709(SystemRandom)
+        3    0.000    0.000    0.000    0.000 {method 'to_bytes' of 'int' objects}
+        3    0.000    0.000    0.000    0.000 {built-in method sys._getframe}
+        5    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:771(is_package)
+        1    0.000    0.000    0.000    0.000 {method 'groups' of 're.Match' objects}
+        5    0.000    0.000    0.000    0.000 {built-in method _sre.unicode_tolower}
+        1    0.000    0.000    0.000    0.000 numbers.py:12(Number)
+        1    0.000    0.000    0.000    0.000 tokenize.py:157(TokenError)
+        1    0.000    0.000    0.000    0.000 _classes.py:1952(InfiniteIterable)
+        1    0.000    0.000    0.000    0.000 statistics.py:117(StatisticsError)
+        1    0.000    0.000    0.000    0.000 _utils.py:23(__init__)
+        1    0.000    0.000    0.000    0.000 copy.py:55(Error)
+        1    0.000    0.000    0.000    0.000 {method 'bit_length' of 'int' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.000    0.000    0.000    0.000 tokenize.py:159(StopTokenizing)
+        1    0.000    0.000    0.000    0.000 <string>:1(<module>)
+        2    0.000    0.000    0.000    0.000 enum.py:898(<lambda>)
+        1    0.000    0.000    0.000    0.000 {method 'setdefault' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 {method 'values' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.id}
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.globals}
+
+
