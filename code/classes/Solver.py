@@ -26,6 +26,7 @@ class SAT_Solver():
 
     def solve_CNF(self):
         self.CNF.remove_pure_literals()
+        self.CNF.build_unit_clauses_list()
         self.CNF.remove_unit_clauses()
         
 
@@ -45,6 +46,7 @@ if __name__ == "__main__":
     Solver = SAT_Solver()
     Solver.load_dimacs_file("files/rules.txt")
     Solver.load_sudoku_file("files/9x9.txt")
+    # Solver.load_sudoku_file("files/hard.txt")
     print()
     before = time.time()
     Solver.solve_CNF()

@@ -7,7 +7,7 @@ def DPLL(sat_solver):
     # No clauses left 
     if not sat_solver.CNF.active_clauses:
         return "SAT"
-            
+
     # The loop is so we can restart here after backtracking
     restart = True
     while restart == True:
@@ -78,6 +78,7 @@ def DPLL(sat_solver):
                 sat_solver.CNF.undo_branch(sat_solver.CNF.current_depth)
                 sat_solver.CNF.undo_unit_clauses()
                 
+
                 # Stop backtracking if depth reached
                 if sat_solver.backtracking_depth == sat_solver.CNF.current_depth:
                     print("done")

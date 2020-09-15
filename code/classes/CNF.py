@@ -20,7 +20,7 @@ class CNF_Formula():
 
         # List of clauses which form the CNF
         self.clauses = {}
-        self.active_clauses = []
+        self.active_clauses = set()
         self.clauses_removed_part = {}
 
         # Hold the removed clauses like {"depth": [clauseid, clauseid]}
@@ -31,6 +31,8 @@ class CNF_Formula():
 
         # History of the variables assigned by branching
         self.branch_history = {}
+
+        self.unit_clauses = set()
         
 
         
@@ -52,6 +54,9 @@ class CNF_Formula():
             self.removed_clauses[str(self.current_depth)] = []
             
         self.removed_clauses[str(self.current_depth)].append(clause_index)
+
+        if len(self.clauses[str(clause_index)]) == 1:
+            self.unit_clauses.remove(clause_index)
     
 
     def undo_clause_remove(self, depth):
@@ -60,7 +65,7 @@ class CNF_Formula():
             for clause_index in self.removed_clauses[str(depth)]:
                 
                 # Reactivate clause
-                self.active_clauses.append(clause_index)
+                self.active_clauses.add(clause_index)
 
                 # Re-add clause to variable_occurs_in
                 for literal in self.clauses[str(clause_index)]:
@@ -68,7 +73,10 @@ class CNF_Formula():
                         self.variable_dict[str(abs(literal))].occurs_negated_in.add(clause_index)
                     if literal > 0:
                         self.variable_dict[str(abs(literal))].occurs_positive_in.add(clause_index)
-        
+
+                if len(self.clauses[str(clause_index)]) == 1:
+                    self.unit_clauses.add(clause_index)
+
         # Reset removed_clauses at that depth
         self.removed_clauses[str(depth)] = []
     
@@ -93,6 +101,13 @@ class CNF_Formula():
         if str(clause_index) not in self.clauses_removed_part:
             self.clauses_removed_part[str(clause_index)] = []
         self.clauses_removed_part[str(clause_index)].append(literal)
+
+        if len(self.clauses[str(clause_index)]) == 0:
+            self.unit_clauses.remove(clause_index)
+
+        elif len(self.clauses[str(clause_index)]) == 1:
+            self.unit_clauses.add(clause_index)
+        
     
 
     def undo_branch(self, depth):
@@ -124,7 +139,12 @@ class CNF_Formula():
                     self.variable_dict[str(abs(literal))].occurs_positive_in.add(clause_index)
 
                 self.clauses_removed_part[str(clause_index)].remove(literal)
-        
+
+                if clause_index in self.active_clauses:
+                    if len(self.clauses[str(clause_index)]) == 1:
+                        self.unit_clauses.add(clause_index)
+                    elif clause_index in self.unit_clauses:
+                        self.unit_clauses.remove(clause_index)
         # Reset removed_clauses at that depth
         self.removed_literals[str(depth)] = []
     
@@ -178,16 +198,22 @@ class CNF_Formula():
             return lowest_var
 
 
-
-
-    
+    def build_unit_clauses_list(self):
+        for clause_id in self.clauses:
+            if len(self.clauses[clause_id]) == 1:
+                self.unit_clauses.add(int(clause_id))
 
     def remove_unit_clauses(self):
         """Remove unit clauses and add it to removed clauses"""
-        active_clauses_index = 0
-        while active_clauses_index < len(self.active_clauses):
-            clause_id = self.active_clauses[active_clauses_index]
+        while self.unit_clauses:
+            clause_id = first(self.unit_clauses)
             if len(self.clauses[str(clause_id)]) == 1:
+
+                if clause_id not in self.unit_clauses:
+                    print(f"Error: not in unit clauses: {clause_id}")
+                    self.print_total_status()
+                    exit()
+
                 literal = first(self.clauses[str(clause_id)])
                 
                 # We save unit clauses in the minus version of the current depth
@@ -200,12 +226,18 @@ class CNF_Formula():
                 self.variable_dict[str(abs(literal))].by_branch = False
                 self.variable_dict[str(abs(literal))].set_depth = self.current_depth
                 self.variable_dict[str(abs(literal))].caused_by_clause_id = clause_id
+                
 
-                # We want to reset the search for unit clauses because new ones could have been created
-                active_clauses_index = 0
             else:
-                active_clauses_index += 1
-    
+                print("ERROR")
+        
+        if self.unit_clauses:
+            print(f"Error: unit clauses left: {self.unit_clauses}")
+            self.print_total_status()
+            exit()
+        
+
+
     def undo_unit_clauses(self):
         self.undo_branch(self.current_depth * -1)
     
@@ -215,10 +247,10 @@ class CNF_Formula():
             variable = self.variable_dict[variable]
             
             if not variable.occurs_negated_in.copy():
-                self.branch(variable.variable_name, True)
+                self.branch(int(variable.variable_name), True)
             
             elif not variable.occurs_positive_in.copy():
-                self.branch(variable.variable_name, False)
+                self.branch(int(variable.variable_name), False)
         
         # Clear history, you dont want to turn this back
         if str(0) in self.removed_clauses:
@@ -247,7 +279,7 @@ class CNF_Formula():
 
     def learn_clause(self, conflict_id):
         # self.print_total_status()
-        partial_clause = self.clauses_removed_part[conflict_id].copy()
+        partial_clause = set(self.clauses_removed_part[conflict_id])
 
         # print("LEARNING CLAUSE: ", conflict_id)
         while True:
@@ -267,7 +299,7 @@ class CNF_Formula():
                 if (self.variable_dict[str(abs(literal))].by_branch == False 
                 and self.variable_dict[str(abs(literal))].set_depth == self.current_depth
                 and self.variable_dict[str(abs(literal))].caused_by_clause_id != None ):
-                    partial_clause += [literal for literal in self.clauses_removed_part[str(self.variable_dict[str(abs(literal))].caused_by_clause_id)] if literal not in partial_clause]
+                    partial_clause = partial_clause | {literal for literal in self.clauses_removed_part[str(self.variable_dict[str(abs(literal))].caused_by_clause_id)] if literal not in partial_clause}
                     self.variable_dict[str(abs(literal))].caused_by_branch = True
                     # print("expanded: ", partial_clause)
                     break
@@ -309,7 +341,11 @@ class CNF_Formula():
         # Add learned clause to clauses:
         clause_id = len(self.clauses)
         self.clauses[str(clause_id)] = set(partial_clause)
-        self.active_clauses.append(clause_id)
+        self.active_clauses.add(clause_id)
+        
+        # Also add to unit clause list
+        if len(self.clauses[str(clause_id)]) == 1:
+            self.unit_clauses.add(clause_id)
 
         # Updat var counters
         for literal in partial_clause:
@@ -341,6 +377,7 @@ class CNF_Formula():
                     exit()
 
         
+        
         return highest_depth
 
 
@@ -366,7 +403,7 @@ class CNF_Formula():
                 continue
 
             # Puts ints in a list. Remove last cause its 0
-            literals = line.split(" ")[:-1]
+            literals = line.split()[:-1]
             
             # Turn all literal strings to literal objects 
             literal_set = set()
@@ -391,7 +428,7 @@ class CNF_Formula():
 
             # Make new clause and append to CNF clause list
             self.clauses[str(clause_counter)] = literal_set
-            self.active_clauses.append(clause_counter)
+            self.active_clauses.add(clause_counter)
             clause_counter += 1
     
 
