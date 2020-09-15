@@ -5,41 +5,67 @@ import time
 
 class SAT_Solver():
     
-    def __init__(self):
+    def __init__(self, clause_learning):
         self.CNF = CNF_Formula()
         sys.setrecursionlimit(5000)
+        
         # Use this in the future to counter iterations
         self.iterations_counter = 0
+
+        # Are we currently backtracking?
+        self.backtracking = False
+        self.backtracking_depth = None
+
+        # Run the dpll with or without clause learning
+        self.clause_learning = clause_learning
     
     def load_dimacs_file(self, file):
+        """ Used to load dimacs file into the CNF"""
         self.CNF.load_dimacs_file(file)
     
     def load_sudoku_file(self, file):
+        """Used to select and load a sudoku"""
         self.CNF.load_sudoku_file(file)
-    
-    def print_CNF_status(self):
-        self.CNF.print_status()
+
 
     def solve_CNF(self):
-        self.CNF.remove_pure_literals()
-        self.CNF.remove_tautologies()
+        """ Function used to run the DPLL algo used to try to solve the CNF"""
         
-        if DPLL(self) == "SAT":
-            print("SAT!")
-            self.print_answer
+        # Tautologies dont exist in properly a properly made sudoku CNF, thus we keep this disabled
+        # self.CNF.remove_tautologies
+        self.CNF.remove_pure_literals()
+        self.CNF.build_unit_clauses_list()
+
+        # Build initial list with unit clauses.
+        self.CNF.remove_unit_clauses()
+        
+        # Run the DPLL algo
+        result = DPLL(self)
+
+
+        if result == "SAT":
+            print("\nSAT!")
+            self.print_answer()
         else:
-            print("UNSAT")
+            print(result)
     
     def print_answer(self):
+        """ Only prints the booleans interesting for sudoku: for full print use: CNF.print_assignments()"""
         self.CNF.print_answer()
         
 
 if __name__ == "__main__":
     
-    Solver = SAT_Solver()
-    Solver.load_dimacs_file("rules.txt")
-    Solver.load_sudoku_file("9x9.txt")
+    # Set clause learning to False/True and set up sat_solver
+    clause_learning = False
+    Solver = SAT_Solver(clause_learning)
+
+    # Load rules and sudoku
+    Solver.load_dimacs_file("files/rules.txt")
+    Solver.load_sudoku_file("files/9x9.txt")
+    print()
+
+    # Solve the sudoku and show the time it took
     before = time.time()
     Solver.solve_CNF()
-    Solver.print_answer()
     print("Time:", time.time() - before)
