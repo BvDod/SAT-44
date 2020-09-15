@@ -22,12 +22,20 @@ class CNF():
     length = math.sqrt(len(line))
     length = (int(round(length)))
     sudtorules = []
-    for i in range(length):
-      for j in range(length):
-        n = line[i*length+j]
-        if n!="." :
-          string = ("{}{}{}".format(i+1,j+1,n))
-          sudtorules.append(string)
+    if length==16:
+      for i in range(length):
+        for j in range(length):
+          n = line[i*length+j]
+          if n!="." :
+            string = ("{}".format(289*(i+1)+17*(j+1)+int(n,17)))
+            sudtorules.append(string)
+    else:
+      for i in range(length):
+        for j in range(length):
+          n = line[i*length+j]
+          if n!="." :
+            string = ("{}{}{}".format(i+1,j+1,n))
+            sudtorules.append(string)
     for rule in sudtorules:
       self.sudtorules = self.sudtorules+("{}  0\n".format(rule))
 
