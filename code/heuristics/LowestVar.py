@@ -8,4 +8,5 @@ def LowestVar(CNF):
         for literal in CNF.clauses[str(clause_id)]:
             if abs(literal) < lowest_var:
                 lowest_var = abs(literal)
-    return lowest_var
+    
+    return lowest_var, True

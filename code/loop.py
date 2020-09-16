@@ -1,4 +1,6 @@
 from classes.Solver import SAT_Solver
+from statistics import mean
+
 
 if __name__ == "__main__":
     
@@ -11,20 +13,23 @@ if __name__ == "__main__":
     # heuristic = "DLIS"
     # heuristic = "JeroslowWangOS"
     # heuristic = "JeroslowWangTS"
-    
-    
+
     # heuristic = "MOMS"
     k_factor = 1  # Set k_factor of MOMS heuristic
 
-    Solver = SAT_Solver(clause_learning, heuristic)
-    Solver.CNF.k_factor = 1
+    solve_range = [1, 100]
 
-    # Load rules and sudoku
-    Solver.CNF.load_dimacs_file("files/rules16x16.txt")
-    Solver.CNF.load_sudoku_file("files/16x16.txt", sudN=546)
-    print()
+    results = []
 
-    # Solve the sudoku and show the time it took
-    Solver.solve_CNF()
-    Solver.print_answer()
-    Solver.print_statistics()
+    for sudN in range(solve_range[0], solve_range[1]):
+        
+        Solver = SAT_Solver(clause_learning, heuristic)
+        Solver.CNF.k_factor = k_factor
+        Solver.CNF.load_dimacs_file("files/rules16x16.txt")
+        Solver.CNF.load_sudoku_file("files/16x16.txt", sudN=sudN)
+        Solver.solve_CNF()
+
+        results.append([sudN, Solver.runtime])
+    
+    
+    print("AVG time to solve: ", mean([result[1] for result in results]))

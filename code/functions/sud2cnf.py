@@ -6,11 +6,18 @@ class SUD2CNF():
   def __init__(self):
     self.sudtorules = ""
 	
-  def load(self,mfile):
+  def load(self,mfile, sud_number = False):
+
+
+    
     # Opens the file, reads the number of sudokus (lines) in it and asks which sudoku you want to solve
     nbLines = len(open(mfile).readlines())
     print ("Loading file",mfile)
-    sudNb = input("{} sudokus have been found in this file.\nWhich one should we solve ?\n".format(nbLines))
+    
+    if not sud_number:
+      sudNb = input("{} sudokus have been found in this file.\nWhich one should we solve ?\n".format(nbLines))
+    else:
+      sudNb = sud_number
     
     # Opens the file to transform the sudoku line into a string in CNF
     mfread = open(mfile,"r")

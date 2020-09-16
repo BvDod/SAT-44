@@ -26,14 +26,6 @@ class SAT_Solver():
         # Run the dpll with or without clause learning
         self.clause_learning = clause_learning
     
-    def load_dimacs_file(self, file):
-        """ Used to load dimacs file into the CNF"""
-        self.CNF.load_dimacs_file(file)
-    
-    def load_sudoku_file(self, file):
-        """Used to select and load a sudoku"""
-        self.CNF.load_sudoku_file(file)
-
 
     def solve_CNF(self):
         """ Function used to run the DPLL algo used to try to solve the CNF"""
@@ -53,7 +45,7 @@ class SAT_Solver():
 
         if result == "SAT":
             print("\nSAT!")
-            self.print_answer()
+            
         else:
             print(result)
     

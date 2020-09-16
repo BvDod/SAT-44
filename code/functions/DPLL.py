@@ -17,11 +17,15 @@ def DPLL(sat_solver):
             return "SAT"
 
         # Pick variable
-        variable = sat_solver.CNF.pick_active_variable(sat_solver.heuristic)
+        variable, first_boolean = sat_solver.CNF.pick_active_variable(sat_solver.heuristic)
         
+        if first_boolean == True:
+            boolean_order = [True, False]
+        else: 
+            boolean_order = [False, True]
 
         # Try both True and False
-        for boolean in (True, False):
+        for boolean in boolean_order:
 
             # Branch 
             sat_solver.CNF.branch(variable, boolean)

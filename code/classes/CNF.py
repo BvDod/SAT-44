@@ -3,11 +3,18 @@
 import math
 import linecache
 import time
-from functions.sud2cnf import SUD2CNF
 from iteration_utilities import first
+
+from classes.Variable import Variable
+from functions.sud2cnf import SUD2CNF
+
 from heuristics.PickFirst import PickFirst
 from heuristics.LowestVar import LowestVar
-from classes.Variable import Variable
+from heuristics.DLCS import DLCS
+from heuristics.DLIS import DLIS
+from heuristics.JeroslowWangOS import JeroslowWangOS
+from heuristics.JeroslowWangTS import JeroslowWangTS
+from heuristics.MOMS import MOMS
 
     
 class CNF_Formula():
@@ -39,6 +46,9 @@ class CNF_Formula():
         self.unit_clauses = set()
         
         self.unit_clause_counter = 0
+
+        # K factor as used by MOMS
+        self.k_factor = 1
 
     def remove_clause(self, clause_index):
         """Correctly removes a clause"""
@@ -205,6 +215,21 @@ class CNF_Formula():
         if heuristic_name == "LowestVar":
             return LowestVar(self)
         
+        if heuristic_name == "DLCS":
+            return DLCS(self)
+
+        if heuristic_name == "DLIS":
+            return DLIS(self)
+
+        if heuristic_name == "JeroslowWangOS":
+            return JeroslowWangOS(self)
+        
+        if heuristic_name == "JeroslowWangTS":
+            return JeroslowWangTS(self)
+        
+        if heuristic_name == "MOMS":
+            return MOMS(self)
+
         else:
             print("Error: Invalid heuristic")
             exit()
@@ -456,10 +481,10 @@ class CNF_Formula():
         self.load_dimacs_string(string)
 
 
-    def load_sudoku_file(self, mfile):
+    def load_sudoku_file(self, mfile, sudN=False):
         """ Function to load sudoku from external file"""
         sud_loader = SUD2CNF()
-        sud_loader.load(mfile)
+        sud_loader.load(mfile, sudN)
 
         
         # Use this method to encode the dimac file and add it to the CNF
