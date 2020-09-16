@@ -1,5 +1,4 @@
 import copy
-from CNF import CNF_Formula
 
 def DPLL(sat_solver):
     """Function which exexcuts the DPLL algorithm for the SAT solver"""
@@ -18,7 +17,7 @@ def DPLL(sat_solver):
             return "SAT"
 
         # Pick variable
-        variable = sat_solver.CNF.pick_active_variable("pick-first")
+        variable = sat_solver.CNF.pick_active_variable(sat_solver.heuristic)
         
 
         # Try both True and False
@@ -26,6 +25,7 @@ def DPLL(sat_solver):
 
             # Branch 
             sat_solver.CNF.branch(variable, boolean)
+            sat_solver.branch_counter += 1
             sat_solver.CNF.remove_unit_clauses()
 
             # No clauses left 
@@ -43,7 +43,8 @@ def DPLL(sat_solver):
                     
                     # Learn clause and start backtracking
                     backtrack_depth = sat_solver.CNF.learn_clause(conflict_id)
-                    
+                    sat_solver.clauses_learned += 1
+                
                     sat_solver.backtracking = True
                     sat_solver.backtracking_depth = backtrack_depth
 
@@ -78,7 +79,7 @@ def DPLL(sat_solver):
                 print("Backtracking to: ", sat_solver.CNF.current_depth)
                 sat_solver.CNF.undo_branch(sat_solver.CNF.current_depth)
                 sat_solver.CNF.undo_unit_clauses()
-                
+                sat_solver.depths_backtracked += 1
 
                 # Stop backtracking if depth reached
                 if sat_solver.backtracking_depth == sat_solver.CNF.current_depth:

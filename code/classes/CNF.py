@@ -3,9 +3,11 @@
 import math
 import linecache
 import time
-from sud2cnf import SUD2CNF
+from functions.sud2cnf import SUD2CNF
 from iteration_utilities import first
-
+from heuristics.PickFirst import PickFirst
+from heuristics.LowestVar import LowestVar
+from classes.Variable import Variable
 
     
 class CNF_Formula():
@@ -36,6 +38,7 @@ class CNF_Formula():
         # List of clause id's that are unit clauses
         self.unit_clauses = set()
         
+        self.unit_clause_counter = 0
 
     def remove_clause(self, clause_index):
         """Correctly removes a clause"""
@@ -195,17 +198,16 @@ class CNF_Formula():
         """Picks the variable which will be branched"""
 
         # Returns first literal (actually random though) of first active clause.
-        if heuristic_name == "pick-first":
-            return abs(first(self.clauses[str(first(self.active_clauses))]))
+        if heuristic_name == "PickFirst":
+            return PickFirst(self)
 
         # Returns the avtive variable with lowest value.
-        if heuristic_name == "lowest":
-            lowest_var = 13337
-            for clause_id in self.active_clauses:
-                for literal in self.clauses[str(clause_id)]:
-                    if abs(literal) < lowest_var:
-                        lowest_var = abs(literal)
-            return lowest_var
+        if heuristic_name == "LowestVar":
+            return LowestVar(self)
+        
+        else:
+            print("Error: Invalid heuristic")
+            exit()
 
 
     def build_unit_clauses_list(self):
@@ -239,7 +241,7 @@ class CNF_Formula():
                 self.variable_dict[str(abs(literal))].set_depth = self.current_depth
                 self.variable_dict[str(abs(literal))].caused_by_clause_id = clause_id
                 
-
+                self.unit_clause_counter += 1
             else:
                 print("ERROR")
         
@@ -533,26 +535,3 @@ class CNF_Formula():
         print("Removed literals: ", self.removed_literals)
         print(self.branch_history)
         print("-------------------------------------------------------------")
-
-
-class Variable():
-    """Represents a variable"""
-
-    def __init__(self, name):
-        # Name of the variable (e.g. 112)
-        self.variable_name = name
-
-        # Current boolean status of the variable, starts as None
-        self.boolean = None
-
-        # The clause id's in which this variable is present in negated/positive from
-        self.occurs_negated_in = set()
-        self.occurs_positive_in = set()
-
-        # Implication graph info
-        self.by_branch = None
-        self.set_depth = None
-        self.caused_by_clause_id = None
-
-if __name__ == "__main__":
-    pass

@@ -1,16 +1,23 @@
-from CNF import CNF_Formula
-from DPLL import DPLL
+from classes.CNF import CNF_Formula
+from functions.DPLL import DPLL
 import sys
 import time
+from time import perf_counter
 
 class SAT_Solver():
     
-    def __init__(self, clause_learning):
+    def __init__(self, clause_learning, heuristic):
         self.CNF = CNF_Formula()
         sys.setrecursionlimit(5000)
         
-        # Use this in the future to counter iterations
-        self.iterations_counter = 0
+        # Statistics
+        self.branch_counter = 0
+        self.runtime = 0
+        self.clauses_learned = 0
+        self.depths_backtracked = 0
+        
+        # Heuristic used in picking variables
+        self.heuristic = heuristic
 
         # Are we currently backtracking?
         self.backtracking = False
@@ -33,15 +40,16 @@ class SAT_Solver():
         
         # Tautologies dont exist in properly a properly made sudoku CNF, thus we keep this disabled
         # self.CNF.remove_tautologies
-        self.CNF.remove_pure_literals()
+        # self.CNF.remove_pure_literals()
         self.CNF.build_unit_clauses_list()
 
         # Build initial list with unit clauses.
         self.CNF.remove_unit_clauses()
         
-        # Run the DPLL algo
+        # Run the DPLL algo and check runtime
+        before = perf_counter()
         result = DPLL(self)
-
+        self.runtime = perf_counter() - before
 
         if result == "SAT":
             print("\nSAT!")
@@ -52,20 +60,14 @@ class SAT_Solver():
     def print_answer(self):
         """ Only prints the booleans interesting for sudoku: for full print use: CNF.print_assignments()"""
         self.CNF.print_answer()
-        
-
-if __name__ == "__main__":
     
-    # Set clause learning to False/True and set up sat_solver
-    clause_learning = False
-    Solver = SAT_Solver(clause_learning)
+    def print_statistics(self):
 
-    # Load rules and sudoku
-    Solver.load_dimacs_file("files/rules.txt")
-    Solver.load_sudoku_file("files/9x9.txt")
-    print()
-
-    # Solve the sudoku and show the time it took
-    before = time.time()
-    Solver.solve_CNF()
-    print("Time:", time.time() - before)
+        print("Runtime: {:8f}".format(self.runtime))
+        print("Times branched: ", self.branch_counter)
+        print("Unit clauses removed: : ", self.CNF.unit_clause_counter)
+    
+        
+        if self.clause_learning:
+            print("Clauses learned/ Conflicts: ", self.clauses_learned)
+            print("Total branches backtracked: ", self.depths_backtracked)
