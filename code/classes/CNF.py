@@ -15,7 +15,7 @@ from heuristics.DLIS import DLIS
 from heuristics.JeroslowWangOS import JeroslowWangOS
 from heuristics.JeroslowWangTS import JeroslowWangTS
 from heuristics.MOMS import MOMS
-
+from heuristics.Random import Random
     
 class CNF_Formula():
     """Represents a CNF_Formula, which is a conjuction of clauses"""
@@ -229,6 +229,9 @@ class CNF_Formula():
         
         if heuristic_name == "MOMS":
             return MOMS(self)
+
+        if heuristic_name == "Random":
+            return Random(self)
 
         else:
             print("Error: Invalid heuristic")
