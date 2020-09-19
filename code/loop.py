@@ -15,7 +15,7 @@ if __name__ == "__main__":
     # heuristic = "JeroslowWangTS"
     # heuristic = "Random"
 
-    heuristic = "MOMS"
+    heuristic = "Random"
     k_factor = 2  # Set k_factor of MOMS heuristic
 
     solve_range = [1, 20]
@@ -26,11 +26,12 @@ if __name__ == "__main__":
         
         Solver = SAT_Solver(clause_learning, heuristic)
         Solver.CNF.k_factor = k_factor
-        Solver.CNF.load_dimacs_file("files/rules.txt")
-        Solver.CNF.load_sudoku_file("files/hard.txt", sudN=sudN)
+        Solver.CNF.load_dimacs_file("files/rules/16x16-minimal.txt")
+        Solver.CNF.load_sudoku_file("files/sudokus/16x16.txt", sudN=sudN)
         Solver.solve_CNF()
 
         results.append([sudN, Solver.runtime])
+        print(Solver.runtime)
     
     
     print("AVG time to solve: ", mean([result[1] for result in results]))
