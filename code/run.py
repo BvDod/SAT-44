@@ -20,10 +20,9 @@ if __name__ == "__main__":
     Solver.CNF.k_factor = 1
 
     # Load rules and sudoku
-    Solver.CNF.load_dimacs_file("files/rules.txt")
-    Solver.CNF.load_sudoku_file("files/9x9.txt")
-    print()
-
+    Solver.CNF.load_dimacs_file("files/rules/rules16x16.txt")
+    Solver.CNF.load_sudoku_file("files/sudokus/16x16.txt")
+   
     # Solve the sudoku and show the time it took
     Solver.solve_CNF()
     Solver.print_answer()

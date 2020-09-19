@@ -9,20 +9,20 @@ if __name__ == "__main__":
 
     # Length of your sudoku
     # Should work with other size than 9? didnt test though
-    size = 9
+    size = 16
 
     # Define if cell, row, column and block definedness and uniqueness are enabled
     # Combine these settings to make the different types of sudoku rule encodings
     cell_def = True
-    cell_uni = True
+    cell_uni = False
 
-    row_def = True
+    row_def = False
     row_uni = True
 
-    col_def = True
+    col_def = False
     col_uni = True
 
-    block_def = True
+    block_def = False
     block_uni = True
     
 
@@ -140,7 +140,7 @@ if __name__ == "__main__":
             
     
     # Write all found rule clauses in a file
-    with open("9x9-extended.txt", "w+") as rules_file:
+    with open("16x16-minimal.txt", "w+") as rules_file:
         for clause in rules:
             string = ""
             for literal in clause:
