@@ -80,7 +80,7 @@ def DPLL(sat_solver):
             
             # If backtracking, go up a depth
             if sat_solver.backtracking:
-                print("Backtracking to: ", sat_solver.CNF.current_depth)
+                # print("Backtracking to: ", sat_solver.CNF.current_depth)
                 sat_solver.CNF.undo_branch(sat_solver.CNF.current_depth)
                 sat_solver.CNF.undo_unit_clauses()
                 sat_solver.depths_backtracked += 1

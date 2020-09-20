@@ -359,11 +359,12 @@ class CNF_Formula():
                     partial_clause.remove(-1*literal)
                 else:
                     literal_counter += 1
-        
+        '''
         if len(partial_clause) < 20:
             print("Found learning clause: ", partial_clause)
         else:
             print("Found learning clause: len > 20")
+        '''
         
         # Find highest depth that is not the current depth:
         highest_depth = -1

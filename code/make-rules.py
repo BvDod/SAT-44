@@ -11,18 +11,21 @@ if __name__ == "__main__":
     # Should work with other size than 9? didnt test though
     size = 16
 
+    # Name of the rules file
+    filename = "test.txt"
+
     # Define if cell, row, column and block definedness and uniqueness are enabled
     # Combine these settings to make the different types of sudoku rule encodings
     cell_def = True
-    cell_uni = False
+    cell_uni = True
 
-    row_def = False
+    row_def = True
     row_uni = True
 
-    col_def = False
+    col_def = True
     col_uni = True
 
-    block_def = False
+    block_def = True
     block_uni = True
     
 
@@ -84,7 +87,7 @@ if __name__ == "__main__":
                         for row2 in range(row+1, size+1):
                             clause = []
                             clause.append("-{}".format(289*(row)+17*(column)+integer))
-                            clause.append("{}".format(289*(row2)+17*(column)+integer))
+                            clause.append("-{}".format(289*(row2)+17*(column)+integer))
                             rules.append(clause)
         
 
@@ -248,7 +251,7 @@ if __name__ == "__main__":
             
     
     # Write all found rule clauses in a file
-    with open("16x16-minimal.txt", "w+") as rules_file:
+    with open(filename, "w+") as rules_file:
         for clause in rules:
             string = ""
             for literal in clause:

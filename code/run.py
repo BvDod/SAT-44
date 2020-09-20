@@ -17,11 +17,11 @@ if __name__ == "__main__":
     k_factor = 1  # Set k_factor of MOMS heuristic
 
     Solver = SAT_Solver(clause_learning, heuristic)
-    Solver.CNF.k_factor = 1
+    Solver.CNF.k_factor = 0.3
 
     # Load rules and sudoku
-    Solver.CNF.load_dimacs_file("files/rules/rules16x16.txt")
-    Solver.CNF.load_sudoku_file("files/sudokus/16x16.txt")
+    Solver.CNF.load_dimacs_file("files/rules/9x9-effi.txt")
+    Solver.CNF.load_sudoku_file("files/sudokus/9x9.txt")
    
     # Solve the sudoku and show the time it took
     Solver.solve_CNF()
