@@ -1,27 +1,37 @@
-# SAT-44
-We need to remember to document: the important design decisions for your SAT solver (both how and why)
+# SAT solver project - Group 44
 
-## TODO
-#### Now (ish)
-- Basic SAT Solver <- divide into sub-task!!
-- Recursive vs iterative (Jade!?!?)  
-      If we can do one, we can do the other. Final decision should probably be made based on our experiment. - Jade
+## How to run
+You can run the SAT solver by running the python file /code/SAT.py after making sure all dependencies in requirements.txt are installed.
+The file can be run in the following way: 
+~ python SAT.py -d rule_dimacs.txt -s strategy_int -i sud_dimacs.txt -u sud_unencoded.txt
+-d : The input dimacs file, most likely used for the rules
+-i : Sudoku dimacs input file
+-u : Optional unencoded sudoku file (non-dimacs)
+-s : The number of the strategy to use
 
-- Decide which heuristics/ type of SAT solver we would like to make.
+The following strategies are available using -s:
+1: "PickFirst",  # Picks the first literal of the first active clause
+2: "LowestVar",  # Picks the active variable with the lowest int value
+3: "DLCS",
+4: "DLIS",
+5: "JeroslowWangOS",
+6: "JeroslowWangTS",
+7: "Random",
+8: "MOMS"}
 
-#### Future
-- Create a hypothesis (plus motivation why it is interesting and plausible)
-- Your experimental design (which experimental conditions do you test, which test set do you use, which metrics are you measuring, and why)
-- Your experimental results (consider including plots or graphs or bar charts, and to test for statistical significance of your results)
-- The conclusion about your hypothesis that you draw from your results (and why)
+Clause learning can be enable/ disabled by setting clause_learning to either True or False in SAT.py. The k used by moms can also be changed by changing k_factor to a different int.
 
-# Log
-- Jade: Translating sudoku into a CNF readable form  
-    Check code file SudToCNF.py for an implementation. Command line : python SudToCNF.py Path\To\SudokuFile.txt
-    If you want to test a file easily, put it in the same folder as the code. Don't forget the ".txt" at the end of your file.
-    I've tested it on 4x4.txt, 16x16.txt and damnhard.sdk.txt. Feel free to ask questions. - Jade
+### heuristics:
+You can find the heuristics under /code/heuristics/
 
-- Brent:  Read dimac and construct CNF structure.
-    I got dimac loading working! I get a different amount of variables and clauses then the file says though, but someone else on piazza had the same problem and the same count as me, so the file might actually be wrong. Doesnt work with the SudToCNF script yet as it only accepts files right now. Should change it to also be able to accept strings instead of just files so SudToCNF can be an input.
+## Constructed rule-files
+The different implemented rule files were created using /code/make-rules.py and can be found under code/files/rules/
+The following rule_files were created:
+- 9x9 minimal
+- 9x9 efficient
+- 9x9 extended
+- 16x16 minimal
+- 16x16 efficient
+- 16x16 extended
 
 

@@ -25,6 +25,8 @@ class SAT_Solver():
 
         # Run the dpll with or without clause learning
         self.clause_learning = clause_learning
+
+        self.satisfiable = False
     
 
     def solve_CNF(self):
@@ -45,6 +47,7 @@ class SAT_Solver():
 
         if result == "SAT":
             print("\nSAT!")
+            self.satisfiable = True
             
         else:
             print(result)
@@ -63,3 +66,10 @@ class SAT_Solver():
         if self.clause_learning:
             print("Clauses learned/ Conflicts: ", self.clauses_learned)
             print("Total branches backtracked: ", self.depths_backtracked)
+
+    def dump_answer(self, filename):
+        
+        with open(filename + ".out", "w") as out_file:
+            if self.satisfiable:
+                for variable in sorted(self.CNF.variable_dict, key = lambda x: int(x)):
+                    out_file.write(f"{variable}: {self.CNF.variable_dict[variable].boolean}\n")
