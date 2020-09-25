@@ -19,7 +19,8 @@ The following strategies are available using -s:
 5: "JeroslowWangOS",   
 6: "JeroslowWangTS",   
 7: "Random",   
-8: "MOMS"}   
+8: "MOMS",   
+9: "Stochastic SAT"} # Independant from DPLL   
 
 Clause learning can be enable/ disabled by setting clause_learning to either True or False in SAT.py.   
 The k used by moms can also be changed by changing k_factor to a different int.
