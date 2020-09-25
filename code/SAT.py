@@ -19,7 +19,8 @@ if __name__ == "__main__":
         5: "JeroslowWangOS",
         6: "JeroslowWangTS",
         7: "Random",
-        8: "MOMS"}
+        8: "MOMS",
+        9: "Stochastic SAT"}
 
     
     clause_learning = False
@@ -42,9 +43,13 @@ if __name__ == "__main__":
     if args.sudoku_dimacs:
         Solver.CNF.load_dimacs_file(args.sudoku_dimacs)
    
+    print(heuristic)
     # Solve the sudoku and show the time it took
-    Solver.solve_CNF()
-    Solver.print_statistics()
+    if heuristic == strategies[9] :
+        Solver.walk()
+    else :
+        Solver.solve_CNF()
+        Solver.print_statistics()
 
     # Dump answer to out file.
     Solver.dump_answer(args.dimacs)

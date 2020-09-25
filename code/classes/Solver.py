@@ -3,6 +3,7 @@ from functions.DPLL import DPLL
 import sys
 import time
 from time import perf_counter
+from functions.WalkSAT import WalkSAT
 
 class SAT_Solver():
     
@@ -73,3 +74,11 @@ class SAT_Solver():
             if self.satisfiable:
                 for variable in sorted(self.CNF.variable_dict, key = lambda x: int(x)):
                     out_file.write(f"{variable}: {self.CNF.variable_dict[variable].boolean}\n")
+
+# walkSAT stochastic function
+
+    def walk(self):
+        before = perf_counter()
+        WalkSAT(self.CNF)
+        self.runtime = perf_counter() - before
+        print("Runtime: {:8f}".format(self.runtime))
